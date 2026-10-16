@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128"><title>飛語 FlyLingo icon — 房型 Room</title><defs><clipPath id="c-room"><rect width="128" height="128" rx="36"/></clipPath></defs><g clip-path="url(#c-room)"><rect width="128" height="128" fill="#E8F0FD"/><rect x="16" y="40" width="10" height="66" rx="5" fill="#7A5A44"/>
+<rect x="102" y="66" width="10" height="40" rx="5" fill="#7A5A44"/>
+<rect x="20" y="72" width="88" height="22" rx="8" fill="#FFFFFF"/>
+<rect x="26" y="58" width="34" height="22" rx="10" fill="#FFE08A"/><circle cx="38.2" cy="67.3" r="1.5" fill="#A0701A"/><circle cx="47.8" cy="67.3" r="1.5" fill="#A0701A"/><path d="M39.4,70.7 Q43.0,74.9 46.6,70.7" fill="none" stroke="#A0701A" stroke-width="1.7" stroke-linecap="round"/>
+<path d="M54,64 H100 Q108,64 108,72 V90 H54 Z" fill="#FF8A7A"/>
+<path d="M64,64 V90 M80,64 V90 M96,64 V90" stroke="#FFC2B8" stroke-width="4"/>
+<rect x="14" y="92" width="100" height="8" rx="4" fill="#7A5A44"/>
+<path d="M90,26 a9,9 0 1 0 9,11 a7,7 0 1 1 -9,-11Z" fill="#9BB5F0"/>
+<path d="M108,16 Q109.32,20.68 114,22 Q109.32,23.32 108,28 Q106.68,23.32 102,22 Q106.68,20.68 108,16Z" fill="#FFD166"/><path d="M72,28 Q72.88,31.12 76,32 Q72.88,32.88 72,36 Q71.12,32.88 68,32 Q71.12,31.12 72,28Z" fill="#FFD166"/></g></svg>

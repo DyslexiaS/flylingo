@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128"><title>飛語 FlyLingo region icon — 克拉克 Clark</title><defs><clipPath id="c-clark"><rect width="128" height="128" rx="36"/></clipPath></defs><g clip-path="url(#c-clark)"><g fill="#fff"><ellipse cx="22" cy="104" rx="16" ry="8"/><ellipse cx="34" cy="98" rx="10" ry="8"/>
+<ellipse cx="104" cy="112" rx="14" ry="7"/></g>
+<g transform="translate(96 18) scale(0.28)"><path d="M64,16 C92,16 104,40 98,60 C93,76 76,86 71,94 L57,94 C52,86 35,76 30,60 C24,40 36,16 64,16Z" fill="#3CC7B4"/><rect x="56" y="98" width="16" height="12" rx="3" fill="#A0673A"/></g>
+<path d="M64,16 C92,16 104,40 98,60 C93,76 76,86 71,94 L57,94 C52,86 35,76 30,60 C24,40 36,16 64,16Z" fill="#FF6B4A"/><path d="M64,16 C76,20 80,42 78,60 C76,76 70,86 68,94 L60,94 C58,86 52,76 50,60 C48,42 52,20 64,16Z" fill="#FFC93C"/>
+<circle cx="58.6" cy="48.1" r="1.8" fill="#7A2A12"/><circle cx="69.4" cy="48.1" r="1.8" fill="#7A2A12"/><path d="M59.8,51.9 Q64.0,56.7 68.2,51.9" fill="none" stroke="#7A2A12" stroke-width="1.9" stroke-linecap="round"/>
+<path d="M58,94 L59,102 M70,94 L69,102" stroke="#8A5A3A" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="53" y="101" width="22" height="15" rx="4" fill="#A0673A"/>
+<path d="M20,23 Q21.54,28.46 27,30 Q21.54,31.54 20,37 Q18.46,31.54 13,30 Q18.46,28.46 20,23Z" fill="#FFC93C"/></g></svg>
