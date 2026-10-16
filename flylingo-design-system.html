@@ -825,7 +825,10 @@ footer.site { padding: 36px 0 44px; color: var(--muted); font-size: 14px; }
   .gallery { padding: 0 14px 16px; }
   .g-track { aspect-ratio: 4 / 3; }
   .g-nav { display: none; }
-  .g-thumbs { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 26%; overflow-x: auto; scrollbar-width: none; }
+  .g-thumbs { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 26%; overflow-x: auto; scrollbar-width: none; padding: 4px; margin: -4px; }
+  .g-cats { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .g-cats .chip { flex: none; }
+  .d-top .city-tile { display: none; }
   .g-ph-label { font-size: 18px; }
   .lightbox { padding: 12px 10px 16px; }
   .lightbox .g-nav { display: none; }
