@@ -102,3 +102,18 @@ python3 _build_redesign.py      # 從 flylingo.html 產生兩個改版和設計�
 資料要再確認：管理強度是從「學校類型」和「管理風格」算出來的，所以這兩欄要一致。例如 GLC Mabolo 類型寫「斯巴達」，管理風格卻寫「彈性／非斯巴達」，頁面目前會顯示為斯巴達。
 
 官方 LINE：https://lin.ee/oDiSotr
+
+## 給客戶一個網址
+
+客戶不用下載檔案。打開網址就會進入採用版本（柔和版 `flylingo-v1-soft.html`）。`index.html` 負責把首頁轉過去，網址後面的 `#schools` 這類頁面標記也會保留。
+
+另外兩個版本的網址是在同一個網址後面加上檔名：
+
+- `flylingo-v2-crisp.html`：俐落版
+- `flylingo-design-system.html`：色彩設計系統
+
+這個網址是公開的：知道連結的人都能打開，GitHub 上也看得到這些檔案。截圖資料夾 `_shots` 不會上傳。
+
+發布方式是 GitHub Pages，帳號是 DyslexiaS。把這個資料夾推上 GitHub，並打開 Pages（用 `main` 分支的根目錄），大約一分鐘後網址是：
+
+https://dyslexias.github.io/flylingo/

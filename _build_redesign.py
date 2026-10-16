@@ -470,7 +470,98 @@ footer.site { padding: 36px 0 44px; color: var(--muted); font-size: 14px; }
 .crumbs a { color: var(--muted); }
 .crumbs a:hover { color: var(--green); }
 .crumbs span[aria-current] { color: var(--ink); font-weight: 500; }
+.d-top { overflow: hidden; }
 .d-head { padding: 22px 24px; display: flex; align-items: center; gap: 18px; }
+
+/* Gallery */
+.gallery { padding: 0 24px 22px; display: grid; gap: 10px; }
+.g-stage { position: relative; border-radius: var(--r-md); overflow: hidden; background: var(--fill); }
+.g-track {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+  aspect-ratio: 16 / 7; outline: none;
+}
+.g-track::-webkit-scrollbar { display: none; }
+.g-track:focus-visible { box-shadow: inset 0 0 0 3px var(--green); }
+.g-slide {
+  flex: 0 0 100%; position: relative; scroll-snap-align: start; scroll-snap-stop: always;
+  border: 0; padding: 0; background: none; cursor: zoom-in; overflow: hidden;
+}
+.g-slide img, .g-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.g-video { cursor: default; }
+.g-video iframe, .lb-video iframe { width: 100%; height: 100%; border: 0; display: block; }
+.g-ph {
+  position: absolute; inset: 0; display: grid; place-items: center; background: var(--city);
+}
+.g-ph .city-art { width: 62%; height: 80%; right: 4%; bottom: 0; opacity: .45; }
+.g-ph-label { position: relative; display: grid; gap: 4px; text-align: center; font-weight: 700; font-size: 22px; color: var(--city-text); }
+.g-ph-label small { font-size: 13px; font-weight: 500; opacity: .75; }
+.g-play {
+  position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%;
+  display: grid; place-items: center; background: rgba(255,255,255,.92); color: var(--coral); box-shadow: var(--shadow-2);
+}
+.g-thumb .g-play { width: 30px; height: 30px; margin: -15px 0 0 -15px; }
+.g-thumb .g-play svg { width: 14px; height: 14px; }
+.g-nav {
+  position: absolute; top: 50%; width: 40px; height: 40px; margin-top: -20px; border: 0; border-radius: 50%;
+  display: grid; place-items: center; background: rgba(255,255,255,.92); color: var(--ink); cursor: pointer;
+  box-shadow: var(--shadow-1); opacity: 0; transition: opacity .2s, transform .2s;
+}
+.g-nav.prev { left: 12px; } .g-nav.next { right: 12px; }
+.g-nav.prev svg { transform: rotate(180deg); }
+.g-stage:hover .g-nav, .g-nav:focus-visible { opacity: 1; }
+.g-nav:active { transform: scale(.92); }
+.g-cap, .g-count {
+  position: absolute; bottom: 12px; height: 30px; padding: 0 12px; border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600;
+}
+.g-cap { left: 12px; background: rgba(255,255,255,.92); color: var(--ink); pointer-events: none; }
+.g-count { right: 12px; border: 0; background: rgba(20,26,19,.62); color: #fff; cursor: pointer; transition: background .2s; }
+.g-count:hover { background: rgba(20,26,19,.8); }
+.g-cats { display: flex; flex-wrap: wrap; gap: 6px; }
+.g-cats .chip[aria-pressed="true"] { background: var(--green-soft); color: var(--green-dark); box-shadow: none; }
+.g-thumbs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.g-thumb {
+  position: relative; aspect-ratio: 4 / 3; padding: 0; border: 0; border-radius: 10px; overflow: hidden;
+  background: var(--fill); cursor: pointer; opacity: .72; transition: opacity .2s, box-shadow .2s;
+}
+.g-thumb:hover, .g-thumb.active { opacity: 1; }
+.g-thumb.active { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--green); }
+.g-thumb .g-ph-label { font-size: 12px; }
+.g-thumb .city-art { width: 90%; }
+.g-more {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  background: rgba(20,26,19,.55); color: #fff; font-size: 18px; font-weight: 700;
+}
+
+/* Lightbox */
+.lb-open { overflow: hidden; }
+.lightbox {
+  width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 16px 24px 20px; border: 0;
+  background: #121610; color: #fff; overflow: hidden;
+  display: none; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto auto; gap: 12px;
+}
+.lightbox[open] { display: grid; }
+.lightbox::backdrop { background: rgba(16,20,15,.6); }
+.lb-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.lb-top p { display: flex; align-items: baseline; gap: 12px; font-size: 15px; }
+.lb-count { font-size: 13px; color: rgba(255,255,255,.65); }
+.lb-close {
+  width: 40px; height: 40px; border: 0; border-radius: 50%; background: rgba(255,255,255,.12); color: #fff;
+  font-size: 24px; line-height: 1; cursor: pointer; transition: background .2s;
+}
+.lb-close:hover { background: rgba(255,255,255,.22); }
+.lb-stage { position: relative; min-height: 0; min-width: 0; }
+.lb-track { height: 100%; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.lb-track::-webkit-scrollbar { display: none; }
+.lb-slide { flex: 0 0 100%; height: 100%; margin: 0; position: relative; scroll-snap-align: start; scroll-snap-stop: always; display: grid; place-items: center; }
+.lb-slide > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.lb-slide .g-ph { inset: 0 8%; border-radius: var(--r-md); }
+.lb-video { width: min(100%, 1100px); aspect-ratio: 16 / 9; }
+.lightbox .g-nav { opacity: 1; }
+.lb-cap { text-align: center; font-size: 14px; color: rgba(255,255,255,.8); }
+.lb-thumbs { display: flex; gap: 8px; overflow-x: auto; justify-content: safe center; padding: 4px; scrollbar-width: none; }
+.lb-thumbs .g-thumb { flex: 0 0 88px; }
+.lb-thumbs .g-thumb.active { box-shadow: 0 0 0 2px var(--mango); }
 .city-tile {
   position: relative; overflow: hidden; width: 112px; height: 80px; flex: none; padding: 10px 12px;
   border-radius: var(--r-md); background: var(--city);
@@ -819,6 +910,15 @@ footer.site { padding: 36px 0 44px; color: var(--muted); font-size: 14px; }
   .detail-nav { margin: 0 -20px; padding: 10px 16px; overflow-x: auto; }
   .facts { grid-template-columns: 1fr; }
   .d-head { padding: 18px; gap: 14px; flex-wrap: wrap; }
+  .gallery { padding: 0 14px 16px; }
+  .g-track { aspect-ratio: 4 / 3; }
+  .g-nav { display: none; }
+  .g-thumbs { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 26%; overflow-x: auto; scrollbar-width: none; }
+  .g-ph-label { font-size: 18px; }
+  .lightbox { padding: 12px 10px 16px; }
+  .lightbox .g-nav { display: none; }
+  .lb-slide .g-ph { inset: 10% 0; }
+  .lb-thumbs .g-thumb { flex-basis: 64px; }
   .city-tile { width: 84px; height: 60px; font-size: 13px; padding: 8px 10px; }
   .share { width: 36px; padding: 0; justify-content: center; }
   .share span { display: none; }
@@ -1630,14 +1730,17 @@ function renderDetail(id) {
       <a href="#schools" data-city-crumb="${esc(s.city)}">${esc(cityName(s.city))}</a>${CHEV}
       <span aria-current="page">${esc(s.name)}</span>
     </nav>
-    <div class="surface d-head rv">
-      <span class="city-tile" data-city="${esc(s.city)}">${cityArt(s.city, "90 14 150 86")}<span style="position:relative">${esc(s.cityEn)}</span></span>
-      <div class="d-id">
-        <p class="meta">${esc(cityName(s.city))} · ${esc(s.campus)}</p>
-        <h1>${esc(s.name)}</h1>
-        <div class="tags">${kindPill(s)}${exams.length ? `<span class="hint inline">${CAP}官方考場：${exams.join("・")}</span>` : ""}</div>
+    <div class="surface d-top rv">
+      <div class="d-head">
+        <span class="city-tile" data-city="${esc(s.city)}">${cityArt(s.city, "90 14 150 86")}<span style="position:relative">${esc(s.cityEn)}</span></span>
+        <div class="d-id">
+          <p class="meta">${esc(cityName(s.city))} · ${esc(s.campus)}</p>
+          <h1>${esc(s.name)}</h1>
+          <div class="tags">${kindPill(s)}${exams.length ? `<span class="hint inline">${CAP}官方考場：${exams.join("・")}</span>` : ""}</div>
+        </div>
+        <button class="share" type="button" aria-label="複製這間學校的連結">${LINK_ICON}<span>複製連結</span></button>
       </div>
-      <button class="share" type="button" aria-label="複製這間學校的連結">${LINK_ICON}<span>複製連結</span></button>
+      ${galleryHTML(s)}
     </div>
     <div class="surface glance rv">
       <div>
@@ -1702,6 +1805,7 @@ function renderDetail(id) {
     </div>`;
   root.querySelector(".share").addEventListener("click", (e) => copyLink(e.currentTarget));
   bindQuote(root, s);
+  bindGallery(root.querySelector(".gallery"), s);
   root.querySelector("[data-city-crumb]").addEventListener("click", () => {
     Object.assign(state, { city: s.city, course: "全部", kind: "全部", q: "", page: 1 });
   });
@@ -1717,6 +1821,170 @@ function renderDetail(id) {
   scrollSpy([...root.querySelectorAll(".detail-section")], (id) => {
     tabs.forEach((a) => a.classList.toggle("active", a.dataset.jump === id));
   }, 180);
+}
+
+/* Photo gallery: real photos/videos from SCHOOL_PHOTOS, otherwise illustrated placeholders */
+const PLACEHOLDER_SHOTS = ["校園外觀", "教室", "宿舍", "餐廳", "公共空間"];
+const THUMBS_SHOWN = 6;
+const PLAY = `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>`;
+const GRID_ICON = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>`;
+
+function youTubeId(url) {
+  const m = String(url || "").match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/);
+  return m ? m[1] : "";
+}
+
+function schoolMedia(s) {
+  if (s.photos && s.photos.length) {
+    return s.photos.map((p) => {
+      const vid = youTubeId(p.video);
+      return { ...p, vid, thumb: p.src || (vid ? `https://img.youtube.com/vi/${vid}/hqdefault.jpg` : ""), cat: p.cat || (vid ? "影片" : "校園") };
+    });
+  }
+  return PLACEHOLDER_SHOTS.map((cat) => ({ cat, placeholder: true }));
+}
+
+function mediaFace(m, s, big) {
+  if (m.placeholder) {
+    return `<span class="g-ph" data-city="${esc(s.city)}">${cityArt(s.city)}<span class="g-ph-label">${esc(m.cat)}${big ? "<small>照片整理中</small>" : ""}</span></span>`;
+  }
+  return `<img src="${esc(m.thumb)}" alt="${esc(m.caption || m.cat)}" loading="lazy">${m.vid ? `<span class="g-play">${PLAY}</span>` : ""}`;
+}
+
+function galleryHTML(s) {
+  const media = schoolMedia(s);
+  const cats = [...new Set(media.map((m) => m.cat))];
+  const extra = media.length - THUMBS_SHOWN;
+  const thumbs = media.slice(0, THUMBS_SHOWN).map((m, i) => {
+    const more = i === THUMBS_SHOWN - 1 && extra > 0;
+    return `<button type="button" class="g-thumb${i === 0 ? " active" : ""}" data-go="${i}"${more ? ` data-all aria-label="看全部 ${media.length} 張"` : ` aria-label="第 ${i + 1} 張：${esc(m.cat)}"`}>${mediaFace(m, s, false)}${more ? `<span class="g-more">+${extra + 1}</span>` : ""}</button>`;
+  }).join("");
+  return `<div class="gallery" aria-roledescription="相簿" aria-label="${esc(s.name)} 照片">
+    <div class="g-stage">
+      <div class="g-track" tabindex="0">${media.map((m, i) => `<button type="button" class="g-slide" data-open="${i}" aria-label="放大第 ${i + 1} 張">${mediaFace(m, s, true)}</button>`).join("")}</div>
+      <button type="button" class="g-nav prev" data-step="-1" aria-label="上一張">${CHEV}</button>
+      <button type="button" class="g-nav next" data-step="1" aria-label="下一張">${CHEV}</button>
+      <span class="g-cap">${esc(media[0].caption || media[0].cat)}</span>
+      <button type="button" class="g-count" data-all>${GRID_ICON}<span>1 / ${media.length}</span></button>
+    </div>
+    ${cats.length > 1 ? `<div class="g-cats">${cats.map((c) => `<button type="button" class="chip sm" data-cat="${esc(c)}">${esc(c)}</button>`).join("")}</div>` : ""}
+    <div class="g-thumbs">${thumbs}</div>
+  </div>`;
+}
+
+function trackIndex(track) {
+  return Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+}
+
+// Arrows and keys step from the slide we're heading to, so quick repeated clicks don't count mid-scroll positions.
+function slider(track, count) {
+  let target = 0;
+  return {
+    go(i, smooth = true) {
+      target = (i + count) % count;
+      track.scrollTo({ left: target * track.clientWidth, behavior: smooth ? "smooth" : "auto" });
+    },
+    step(d) { this.go(target + d); },
+    settle() {
+      const i = trackIndex(track);
+      if (Math.abs(track.scrollLeft - i * track.clientWidth) < 2) target = i;
+      return i;
+    }
+  };
+}
+
+function bindGallery(g, s) {
+  if (!g) return;
+  const media = schoolMedia(s);
+  const track = g.querySelector(".g-track");
+  const nav = slider(track, media.length);
+  const go = (i) => nav.go(i);
+  const sync = () => {
+    const i = nav.settle();
+    g.querySelector(".g-count span").textContent = `${i + 1} / ${media.length}`;
+    g.querySelector(".g-cap").textContent = media[i].caption || media[i].cat;
+    g.querySelectorAll(".g-thumb").forEach((t) => t.classList.toggle("active", Number(t.dataset.go) === i));
+    g.querySelectorAll("[data-cat]").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.cat === media[i].cat)));
+  };
+  let raf = 0;
+  track.addEventListener("scroll", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(sync); }, { passive: true });
+  track.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") { e.preventDefault(); nav.step(e.key === "ArrowRight" ? 1 : -1); }
+  });
+  g.addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    if (b.hasAttribute("data-all")) return openLightbox(s, trackIndex(track));
+    if (b.dataset.step) return nav.step(Number(b.dataset.step));
+    if (b.dataset.go) return go(Number(b.dataset.go));
+    if (b.dataset.cat) return go(media.findIndex((m) => m.cat === b.dataset.cat));
+    if (b.dataset.open) {
+      const m = media[Number(b.dataset.open)];
+      if (m.vid) b.outerHTML = videoFrame(m);
+      else openLightbox(s, Number(b.dataset.open));
+    }
+  });
+  sync();
+}
+
+function videoFrame(m) {
+  return `<div class="g-slide g-video"><iframe src="https://www.youtube-nocookie.com/embed/${esc(m.vid)}?autoplay=1&rel=0" title="${esc(m.caption || "學校影片")}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>`;
+}
+
+function openLightbox(s, start) {
+  const media = schoolMedia(s);
+  let box = document.getElementById("lightbox");
+  if (!box) {
+    box = document.createElement("dialog");
+    box.id = "lightbox";
+    box.className = "lightbox";
+    document.body.appendChild(box);
+    box.addEventListener("close", () => { box.innerHTML = ""; document.documentElement.classList.remove("lb-open"); });
+  }
+  box.setAttribute("aria-label", `${s.name} 照片`);
+  box.innerHTML = `
+    <div class="lb-top"><p><strong>${esc(s.name)}</strong><span class="lb-count"></span></p><button type="button" class="lb-close" aria-label="關閉">×</button></div>
+    <div class="lb-stage">
+      <div class="lb-track">${media.map((m) => `<figure class="lb-slide">${m.vid ? `<div class="lb-video" data-vid="${esc(m.vid)}"></div>` : mediaFace(m, s, true)}</figure>`).join("")}</div>
+      <button type="button" class="g-nav prev" data-step="-1" aria-label="上一張">${CHEV}</button>
+      <button type="button" class="g-nav next" data-step="1" aria-label="下一張">${CHEV}</button>
+    </div>
+    <p class="lb-cap"></p>
+    <div class="lb-thumbs">${media.map((m, i) => `<button type="button" class="g-thumb" data-go="${i}" aria-label="第 ${i + 1} 張">${mediaFace(m, s, false)}</button>`).join("")}</div>`;
+  const track = box.querySelector(".lb-track");
+  const nav = slider(track, media.length);
+  let last = -1;
+  const sync = () => {
+    const i = nav.settle();
+    if (i === last) return;
+    last = i;
+    box.querySelector(".lb-count").textContent = `${i + 1} / ${media.length}`;
+    box.querySelector(".lb-cap").textContent = media[i].caption || media[i].cat;
+    box.querySelectorAll(".lb-thumbs .g-thumb").forEach((t, j) => {
+      t.classList.toggle("active", j === i);
+      if (j === i) t.scrollIntoView({ block: "nearest", inline: "center" });
+    });
+    box.querySelectorAll(".lb-video").forEach((v) => {
+      const slide = [...track.children].indexOf(v.parentElement);
+      v.innerHTML = slide === i ? `<iframe src="https://www.youtube-nocookie.com/embed/${esc(v.dataset.vid)}?rel=0" title="學校影片" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe>` : "";
+    });
+  };
+  let raf = 0;
+  track.addEventListener("scroll", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(sync); }, { passive: true });
+  box.onclick = (e) => {
+    const b = e.target.closest("button");
+    if (b && b.classList.contains("lb-close")) return box.close();
+    if (b && b.dataset.step) return nav.step(Number(b.dataset.step));
+    if (b && b.dataset.go) return nav.go(Number(b.dataset.go));
+  };
+  box.onkeydown = (e) => {
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") { e.preventDefault(); nav.step(e.key === "ArrowRight" ? 1 : -1); }
+  };
+  document.documentElement.classList.add("lb-open");
+  box.showModal();
+  nav.go(start, false);
+  sync();
+  box.querySelector(".lb-close").focus();
 }
 
 function linkOrText(label, value) {
@@ -2566,11 +2834,26 @@ ARTICLES = [
 ]
 
 
+# School photo galleries, keyed by school id (the part after #school/ in the URL).
+# Each item is a photo {"src", "cat", "caption"} or a YouTube video {"video", "cat", "caption"}.
+# "cat" groups photos into the gallery's category buttons (校園、教室、宿舍、餐廳、設施、影片…).
+# Schools not listed here show illustrated placeholders until licensed photos arrive.
+# Example:
+#   "cia-mactan-campus": [
+#       {"src": "https://…/cia-front.jpg", "cat": "校園", "caption": "校園入口"},
+#       {"src": "https://…/cia-room.jpg", "cat": "宿舍", "caption": "雙人房"},
+#       {"video": "https://www.youtube.com/watch?v=XXXXXXXXXXX", "cat": "影片", "caption": "校園導覽"},
+#   ],
+SCHOOL_PHOTOS = {}
+
+
 def with_process(data_json):
     import json
     data = json.loads(data_json)
     data["steps"] = PROCESS_STEPS
     data["articles"] = ARTICLES
+    for school in data["schools"]:
+        school["photos"] = SCHOOL_PHOTOS.get(school["id"], [])
     return json.dumps(data, ensure_ascii=False)
 
 
