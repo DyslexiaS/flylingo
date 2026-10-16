@@ -26,9 +26,9 @@ def favicon_link():
 
 
 # Link previews (LINE, Messages) do not run the page, and they do not show SVG.
-# icons/og.png is the square shooting-star logo, exported for that preview.
+# icons/og.png is the black-background FlyLingo Shooting Star Logo.
 SITE = "https://dyslexias.github.io/flylingo"
-OG_IMAGE = f"{SITE}/icons/og.png"
+OG_IMAGE = f"{SITE}/icons/og.png?v=2"
 OG_TITLE = "FlyLingo 飛語｜從語言出發，飛向世界"
 OG_DESC = "先聽你的目標、週數和預算，再幫你選校、報名，一路陪到抵達。"
 

@@ -56,6 +56,10 @@ FlyLingo 是菲律賓語言學校代辦。這個資料夾是給客戶看的**單
   - **圖片**：封面填 `cover`（WordPress 的精選圖片網址），沒填就用主題插畫；內文的圖片直接放在文章 HTML 裡
   - 文章資料寫在 `_build_redesign.py` 的 `ARTICLES`，欄位對應 WordPress：`title`＝標題、`excerpt`＝摘要、`kicker`＝分類、`cover`＝精選圖片、`html`＝文章內容。之後接 WordPress REST API 時，把 `content.rendered` 放進 `html` 就能直接顯示。封面插畫在 `BLOG_ART`，顏色用 `tone`（`mango`／`blue`／`coral`）
 
+## 給設計師看的畫面
+
+`設計審核/` 裡有現在採用的 V1 全站截圖，共 17 張，清單寫在同資料夾的 `畫面清單.txt`。桌面寬 1440、手機寬 390，都是整頁；選單和照片燈箱是蓋住畫面的狀態，只截一個螢幕。學校內頁以 CIA 為例，文章以行李清單為例。
+
 ## 改版設計原則
 
 1. **從左到右照使用者的注意順序排**：主要按鈕放左邊、次要放右邊；清單卡片先看校名，再看細節。
@@ -122,7 +126,7 @@ python3 _build_redesign.py      # 從 flylingo.html 產生兩個改版和設計�
 
 這個網址是公開的：知道連結的人都能打開，GitHub 上也看得到這些檔案。截圖資料夾 `_shots` 不會上傳。
 
-傳給客戶時，聊天軟體的預覽圖用方形 logo（流星那張），檔案是 `icons/og.png`。橫式 logo 不適合這張小預覽。LINE 會記住第一次看到的預覽，改完之後如果還是舊的文字卡，等一下子再傳一次。
+傳給客戶時，聊天軟體的預覽圖是黑底的方形 logo `FlyLingo Shooting Star Logo`，檔案是 `icons/og.png`。橫式 logo 不適合這張小預覽。LINE 會記住第一次看到的預覽，改完之後如果還是舊圖，用 https://dyslexias.github.io/flylingo/?v=2 再傳一次。
 
 已經發布在 GitHub Pages，來源是 `main` 分支的根目錄：
 
