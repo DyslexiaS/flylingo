@@ -25,6 +25,34 @@ def favicon_link():
     return f'<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,{quote(svg, safe=" =:/,.-")}">'
 
 
+# Link previews (LINE, Messages) do not run the page, and they do not show SVG.
+# icons/og.png is the square shooting-star logo, exported for that preview.
+SITE = "https://dyslexias.github.io/flylingo"
+OG_IMAGE = f"{SITE}/icons/og.png"
+OG_TITLE = "FlyLingo 飛語｜從語言出發，飛向世界"
+OG_DESC = "先聽你的目標、週數和預算，再幫你選校、報名，一路陪到抵達。"
+
+
+def og_tags(path):
+    url = SITE + "/" if path in ("", "index.html") else f"{SITE}/{path}"
+    return f'''<meta name="description" content="{OG_DESC}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FlyLingo 飛語">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:url" content="{url}">
+<meta property="og:title" content="{OG_TITLE}">
+<meta property="og:description" content="{OG_DESC}">
+<meta property="og:image" content="{OG_IMAGE}">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:alt" content="FlyLingo 飛語">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{OG_TITLE}">
+<meta name="twitter:description" content="{OG_DESC}">
+<meta name="twitter:image" content="{OG_IMAGE}">'''
+
+
 ICON_FILES = ["region-all", "region-cebu", "region-baguio", "region-clark", "region-tarlac", "region-manila",
               "school-room", "school-accommodation", "school-laundry"]
 
@@ -213,6 +241,7 @@ header.site.scrolled { box-shadow: 0 1px 0 var(--line-gray), 0 8px 24px rgba(27,
 }
 .nav a:hover { background: var(--fill); color: var(--ink); }
 .nav a[aria-current="page"] { background: var(--green-soft); color: var(--green-dark); }
+.head-socials + .head-cta { margin-left: -14px; }
 .head-cta { margin-left: auto; }
 .menu-btn {
   display: none; margin-left: auto; width: 40px; height: 40px; border: 0; border-radius: 12px;
@@ -401,18 +430,53 @@ header.site.open .menu-btn span::after { transform: translateY(-5px) rotate(-45d
 .cta p { color: rgba(255,255,255,.82); }
 .cta > * { position: relative; }
 footer.site { padding: 36px 0 44px; color: var(--muted); font-size: 14px; }
-.foot { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; }
-.foot .logo-word { width: 92px; height: 45px; margin-bottom: 8px; }
+.foot { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
 .foot-links { display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
 .foot nav { display: flex; gap: 18px; flex-wrap: wrap; }
 .foot nav a { color: var(--muted); }
 .foot nav a:hover { color: var(--green); }
 .socials { display: flex; gap: 8px; }
 .socials a {
-  width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%;
-  background: #fff; color: var(--muted); transition: color .2s, transform .25s var(--ease);
+  width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; color: #fff;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
 }
-.socials a:hover { color: var(--green); transform: translateY(-2px); }
+.socials a:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(27,33,25,.18); }
+.socials .social-threads { background: #000; }
+.socials .social-instagram { background: radial-gradient(circle at 30% 107%, #FDF497 0%, #FDF497 5%, #FD5949 45%, #D6249F 60%, #285AEB 90%); }
+.socials .social-facebook { background: #1877F2; }
+.socials .social-line { background: #06C755; }
+.head-socials { margin-left: auto; gap: 6px; }
+.head-socials a { width: 32px; height: 32px; }
+.foot-socials { display: none; }
+
+/* Footer brand: a star flies over the slogan and lands, then the second phrase gets underlined */
+.foot-brand { display: flex; align-items: center; gap: 22px; }
+.foot-brand .logo-word { width: 108px; height: 53px; flex: none; }
+.foot-copy { position: relative; padding: 26px 0 2px 22px; border-left: 1.5px solid var(--line-gray); }
+.slogan { margin: 0; font-size: 19px; font-weight: 700; color: var(--ink); white-space: nowrap; letter-spacing: .02em; }
+.slogan em {
+  font-style: normal; color: var(--green-dark);
+  background: linear-gradient(var(--mango), var(--mango)) no-repeat 0 88% / 100% .32em;
+}
+.foot-sub { margin: 4px 0 0; font-size: 13px; }
+.foot-trail {
+  position: absolute; left: 22px; top: 0; width: 250px; height: 28px; overflow: visible;
+  fill: none; stroke: var(--mango); stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 1 6;
+}
+.trail-star {
+  position: absolute; left: 22px; top: 0; width: 18px; height: 18px; fill: var(--mango);
+  offset-path: path("M0 24C60-2 176-6 246 14"); offset-distance: 100%; offset-rotate: 0deg;
+}
+@keyframes fly-in { from { offset-distance: 0%; transform: rotate(-120deg) scale(.6); } to { offset-distance: 100%; transform: none; } }
+@keyframes trail-in { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes glint { 0%, 86%, 100% { transform: none; } 93% { transform: scale(1.35) rotate(36deg); } }
+@keyframes underline { from { background-size: 0 .32em; } to { background-size: 100% .32em; } }
+.motion .foot-brand:not(.fly) .trail-star { offset-distance: 0%; opacity: 0; }
+.motion .foot-brand:not(.fly) .foot-trail { clip-path: inset(0 100% 0 0); }
+.motion .foot-brand:not(.fly) .slogan em { background-size: 0 .32em; }
+.motion .foot-brand.fly .trail-star { animation: fly-in 1.3s var(--ease) both, glint 4.5s ease-in-out 1.3s infinite; }
+.motion .foot-brand.fly .foot-trail { animation: trail-in 1.3s var(--ease) both; }
+.motion .foot-brand.fly .slogan em { animation: underline .7s var(--ease) 1.1s both; }
 
 /* Inner pages */
 .page { padding: 32px 0 24px; }
@@ -944,6 +1008,11 @@ footer.site { padding: 36px 0 44px; color: var(--muted); font-size: 14px; }
   .wp-content td:first-child { white-space: normal; }
   .foot-links { align-items: flex-start; }
   footer.site { padding-bottom: 96px; }
+  .head-socials { display: none; }
+  .foot-socials { display: flex; }
+  .foot-brand { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .foot-copy { padding-left: 0; border-left: 0; }
+  .foot-trail, .trail-star { left: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -1033,12 +1102,30 @@ LINE_ICON = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"
 ARROW = '<svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 SEARCH_ICON = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg>'
 
+# Brand glyphs (white on each brand's colour, see .social-* in CSS).
+SOCIAL_LINKS = [
+    ("threads", "Threads", "https://www.threads.com/@sailingo2026",
+     '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.19 24h-.01c-3.58-.02-6.33-1.2-8.18-3.51C2.35 18.44 1.5 15.59 1.47 12v-.02c.03-3.58.88-6.43 2.53-8.48C5.85 1.2 8.6.02 12.18 0h.01c2.75.02 5.04.73 6.83 2.1 1.68 1.29 2.86 3.13 3.51 5.47l-2.04.57c-1.1-3.96-3.9-5.99-8.3-6.02-2.91.02-5.11.94-6.54 2.72C4.31 6.5 3.62 8.91 3.59 12c.03 3.09.72 5.5 2.06 7.16 1.43 1.78 3.63 2.7 6.54 2.72 2.62-.02 4.36-.63 5.8-2.05 1.65-1.61 1.62-3.59 1.09-4.8-.31-.71-.87-1.3-1.63-1.75-.19 1.35-.62 2.45-1.28 3.27-.89 1.1-2.14 1.7-3.73 1.79-1.2.07-2.36-.22-3.26-.8-1.06-.69-1.68-1.74-1.75-2.96-.07-1.19.41-2.29 1.33-3.08.88-.76 2.12-1.21 3.58-1.29a13.85 13.85 0 0 1 3.02.14c-.13-.74-.38-1.33-.75-1.76-.51-.59-1.31-.88-2.36-.89h-.03c-.84 0-1.99.23-2.72 1.32L7.73 7.85c.98-1.45 2.57-2.26 4.48-2.26h.04c3.2.02 5.1 1.98 5.29 5.39l.32.14c1.49.7 2.58 1.76 3.15 3.07.8 1.82.87 4.79-1.55 7.16-1.85 1.81-4.09 2.63-7.28 2.65Zm1-11.69c-.24 0-.49.01-.74.02-1.84.1-2.98.95-2.92 2.14.07 1.26 1.45 1.84 2.78 1.77 1.23-.07 2.82-.54 3.09-3.71a10.5 10.5 0 0 0-2.21-.22Z"/></svg>'),
+    ("instagram", "Instagram", "https://www.instagram.com/sailingo2026",
+     '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>'),
+    ("facebook", "Facebook", "https://www.facebook.com/share/1E7bGA2M6w",
+     '<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.5-1.5h1.6V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V10.4H7.8v3h2.6V21z"/></svg>'),
+    ("line", "官方 LINE", "https://lin.ee/oDiSotr", LINE_ICON),
+]
+
+
+def socials(skip=()):
+    return "".join(
+        f'<a class="social-{key}" href="{url}" target="_blank" rel="noopener" aria-label="{label}">{svg}</a>'
+        for key, label, url, svg in SOCIAL_LINKS if key not in skip)
+
 TEMPLATE = r'''<!DOCTYPE html>
 <html lang="zh-Hant" data-theme="__THEME__">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FlyLingo 飛語｜從語言出發，飛向世界</title>
+__OG__
 __FAVICON__
 <!--
   FlyLingo 飛語原型（__LABEL__ 設計版本）。雙擊用瀏覽器開啟即可。
@@ -1077,6 +1164,7 @@ __EXTRA__
       <a href="#blog" data-nav="blog">部落格</a>
     </nav>
     <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="nav" aria-label="選單"><span></span></button>
+    <div class="socials head-socials" aria-label="社群">__HEAD_SOCIALS__</div>
     <a class="btn btn-primary btn-sm head-cta" href="https://lin.ee/oDiSotr" target="_blank" rel="noopener">__LINE_ICON__LINE 諮詢</a>
   </div>
 </header>
@@ -1270,9 +1358,14 @@ __EXTRA__
 </main>
 <footer class="site">
   <div class="wrap foot">
-    <div>
+    <div class="foot-brand" id="foot-brand">
       <svg class="logo-word" viewBox="0 0 1040 510" role="img" aria-label="FlyLingo 飛語"><use href="#mark-word"/></svg>
-      <p>從語言出發，飛向世界。</p>
+      <div class="foot-copy">
+        <svg class="foot-trail" viewBox="0 0 250 28" aria-hidden="true"><path d="M0 24C60-2 176-6 246 14"/></svg>
+        <svg class="trail-star" viewBox="-11 -11 22 22" aria-hidden="true"><path d="M0-11L3.2-3.5L11-3.4L4.9 1.6L7 9.2L0 4.8L-7 9.2L-4.9 1.6L-11-3.4L-3.2-3.5Z"/></svg>
+        <p class="slogan">從語言出發，<em>飛向世界。</em></p>
+        <p class="foot-sub">菲律賓語言學校代辦，從選校陪你到結業。</p>
+      </div>
     </div>
     <div class="foot-links">
       <nav aria-label="頁尾">
@@ -1281,18 +1374,7 @@ __EXTRA__
         <a href="#faq">常見問題</a>
         <a href="#blog">部落格</a>
       </nav>
-      <div class="socials" aria-label="社群">
-        <a href="https://www.threads.com/@sailingo2026" target="_blank" rel="noopener" aria-label="Threads">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 8.5c2.8-2 7.2-.6 7 3.2-.3 4.8-6.8 4.2-6.5-1.2.2-3.6 5.5-3.2 6.5-1M8 12.2c.4 4.6 6.6 6.4 8.8 3.3"/></svg>
-        </a>
-        <a href="https://www.instagram.com/sailingo2026" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.2" cy="6.8" r=".8" fill="currentColor" stroke="none"/></svg>
-        </a>
-        <a href="https://www.facebook.com/share/1E7bGA2M6w" target="_blank" rel="noopener" aria-label="Facebook">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h2.6l.4-3H13v-2c0-.6.4-1 1-1z"/></svg>
-        </a>
-        <a href="https://lin.ee/oDiSotr" target="_blank" rel="noopener" aria-label="官方 LINE">__LINE_ICON__</a>
-      </div>
+      <div class="socials foot-socials" aria-label="社群">__FOOT_SOCIALS__</div>
     </div>
   </div>
 </footer>
@@ -1331,6 +1413,15 @@ function observeReveal() {
   if (!io) return;
   document.querySelectorAll(".rv:not(.in), .rv-group:not(.in)").forEach((el) => io.observe(el));
 }
+(function footBrand() {
+  const el = document.getElementById("foot-brand");
+  if (!io || !el) return;
+  const fly = () => { el.classList.remove("fly"); void el.offsetWidth; el.classList.add("fly"); };
+  new IntersectionObserver((entries, obs) => {
+    if (entries[0].isIntersecting) { fly(); obs.disconnect(); }
+  }, { threshold: .6 }).observe(el);
+  el.addEventListener("mouseenter", () => { if (el.classList.contains("fly")) fly(); });
+})();
 let spy = null;
 let spyPinned = false;
 function stopSpy() {
@@ -2600,6 +2691,7 @@ def design_system(data_json):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FlyLingo 色彩設計系統</title>
+{og_tags("flylingo-design-system.html")}
 {favicon_link()}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2622,10 +2714,13 @@ def build(variant, data, word, star):
     for key, value in {
         "__BASE_CSS__": base_css(),
         "__VARIANT_CSS__": variant["css"].strip(),
+        "__OG__": og_tags(variant["file"]),
         "__FAVICON__": favicon_link(),
         "__THEME__": variant["theme"],
         "__LABEL__": variant["label"],
         "__EXTRA__": variant["extra"],
+        "__HEAD_SOCIALS__": socials(skip=("line",)),
+        "__FOOT_SOCIALS__": socials(),
         "__LINE_ICON__": LINE_ICON,
         "__ARROW__": ARROW,
         "__SEARCH_ICON__": SEARCH_ICON,
