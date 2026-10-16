@@ -120,6 +120,8 @@ python3 _build_redesign.py      # 從 flylingo.html 產生兩個改版和設計�
 
 這個網址是公開的：知道連結的人都能打開，GitHub 上也看得到這些檔案。截圖資料夾 `_shots` 不會上傳。
 
-發布方式是 GitHub Pages，帳號是 DyslexiaS。把這個資料夾推上 GitHub，並打開 Pages（用 `main` 分支的根目錄），大約一分鐘後網址是：
+已經發布在 GitHub Pages，來源是 `main` 分支的根目錄：
 
 https://dyslexias.github.io/flylingo/
+
+之後改了網站，在這個資料夾執行 `git add`、`git commit`、`git push`，大約一分鐘後客戶看到的就是新版本。
