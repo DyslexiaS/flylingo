@@ -14,7 +14,7 @@ FlyLingo 是菲律賓語言學校代辦。這個資料夾是給客戶看的**單
 | `flylingo-design-system.html` | 色彩設計系統：品牌色、中性色、強調色候選、對比檢查、用法規則 |
 | `_build_flylingo.py` | 產生 `flylingo.html`，資料從兩份 Excel 讀（學校清單、八大服務流程） |
 | `_build_redesign.py` | 產生兩個改版，資料和 logo 直接從 `flylingo.html` 讀 |
-| `icons/` | 橫式 logo、流星 logo、網站分頁小圖示 `fly.faicon.svg`（產生時加上墨色底 `#1B2119`，綠底會吃掉地球、黃底會吃掉星星）、城市插圖 `region-*.svg`、住宿插圖 `school-*.svg`（SVG）。這些圖會在產生時直接嵌進 HTML，單獨寄出檔案也看得到；新增插圖要把檔名加進 `_build_redesign.py` 的 `ICON_FILES` |
+| `icons/` | 橫式 logo、流星 logo、網站分頁小圖示 `dark.favion.svg`（綠底、白標、黃星）、城市插圖 `region-*.svg`、住宿插圖 `school-*.svg`（SVG）。這些圖會在產生時直接嵌進 HTML，單獨寄出檔案也看得到；新增插圖要把檔名加進 `_build_redesign.py` 的 `ICON_FILES` |
 | `_shots/` | 改版前後的截圖，可以刪 |
 
 ## 網站內容

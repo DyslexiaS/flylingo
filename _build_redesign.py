@@ -16,15 +16,13 @@ from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parent
 SOURCE = ROOT / "flylingo.html"
-FAVICON = ROOT / "icons" / "fly.faicon.svg"
+FAVICON = ROOT / "icons" / "dark.favion.svg"
 
 
 def favicon_link():
     # Inlined so a single emailed HTML file still shows the tab icon.
-    # Ink tile: brand green hides the globe, mango hides the star.
+    # dark.favion.svg is the green tile: white mark, yellow star.
     svg = " ".join(FAVICON.read_text().split())
-    tile = '<rect x="209.33" y="160" width="470" height="470" rx="104" fill="#1B2119"/>'
-    svg = svg.replace(">", ">" + tile, 1)
     return f'<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,{quote(svg, safe=" =:/,.-")}">'
 
 
