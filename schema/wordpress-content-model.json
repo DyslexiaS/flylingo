@@ -1,0 +1,5 @@
+{
+  "replaced_by": "schema/school-fields.json",
+  "sheet": "schema/school-field-sheet.md",
+  "note": "學校後台改用扁平欄位表。這一檔不要再拿去建置。"
+}

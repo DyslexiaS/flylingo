@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build two redesigned FlyLingo prototypes from flylingo.html.
+"""Build the FlyLingo prototypes from flylingo.html.
 
 flylingo.html already embeds the school / process / FAQ data and both logos,
 so this script reuses them instead of re-reading the source spreadsheets.
@@ -31,7 +31,7 @@ def favicon_link():
 SITE = "https://dyslexias.github.io/flylingo"
 OG_IMAGE = f"{SITE}/icons/og.png?v=2"
 OG_TITLE = "FlyLingo 飛語｜從語言出發，飛向世界"
-OG_DESC = "先聽你的目標、週數和預算，再幫你選校、報名，一路陪到抵達。"
+OG_DESC = "先了解你的目標、週數和預算，再幫你挑學校、辦報名，到結業都有人協助。"
 
 
 def og_tags(path):
@@ -269,9 +269,15 @@ header.site.open .menu-btn span::after { transform: translateY(-5px) rotate(-45d
 }
 .hero .lede { margin: 18px 0 30px; }
 .row-btns { display: flex; flex-wrap: wrap; gap: 10px; }
-.hero-art { position: relative; justify-self: center; width: 100%; max-width: 340px; }
+.hero-art { position: relative; justify-self: stretch; width: 100%; max-width: none; }
+.hero-photo { width: 100%; height: min(52vh, 460px); min-height: 300px; object-fit: cover; border-radius: 16px; display: block; }
 .land { fill: var(--green-soft); }
 .route { display: block; width: 100%; height: auto; overflow: visible; }
+.hero .route {
+  position: absolute; right: 12px; bottom: 12px; width: 150px;
+  background: rgba(255,255,255,.94); border-radius: 14px; padding: 4px 2px 0;
+  box-shadow: var(--shadow-1);
+}
 .route-draw { fill: none; stroke: #fff; stroke-width: 8; stroke-dasharray: 1 1; stroke-dashoffset: 0; }
 .route-line { fill: none; stroke: var(--green); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 1 8; }
 .port circle { fill: #fff; stroke: var(--green); stroke-width: 3; }
@@ -280,8 +286,8 @@ header.site.open .menu-btn span::after { transform: translateY(-5px) rotate(-45d
 .port .ping { fill: none; stroke: var(--green); stroke-width: 2; opacity: 0; transform-box: fill-box; transform-origin: center; }
 .flyer .star { fill: var(--mango); }
 .route-chip {
-  position: absolute; left: 4%; top: 52%; display: inline-flex; align-items: center; height: 30px; padding: 0 12px;
-  border-radius: 999px; background: var(--mango-soft); color: var(--mango-ink); font-size: 13px; font-weight: 600;
+  position: absolute; left: 12px; bottom: 14px; top: auto; display: inline-flex; align-items: center; height: 30px; padding: 0 12px;
+  border-radius: 999px; background: var(--mango); color: var(--ink); font-size: 13px; font-weight: 600;
 }
 .motion .hero-art:not(.fly) .route-draw { stroke-dashoffset: 1; }
 .motion .hero-art:not(.fly) .flyer, .motion .hero-art:not(.fly) .route-chip { opacity: 0; }
@@ -326,6 +332,11 @@ header.site.open .menu-btn span::after { transform: translateY(-5px) rotate(-45d
 .school-card:hover .city-art .m { transform: translate(-8px, -3px); }
 .school-card .ph { height: 128px; justify-content: flex-end; }
 .school-card .ph .city-en { font-size: 30px; }
+.ph.has-photo { background: #1A3A15; }
+.ph-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ph.has-photo .city-en { color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,.55); }
+.school-card .ph.has-photo { height: 168px; }
+.badge.photo-note { background: rgba(27,33,25,.62); color: #fff; }
 .ph-badges { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; align-items: flex-start; gap: 8px; }
 .badge.note { background: rgba(255,255,255,.92); color: var(--green-dark); }
 .ph-badges .kind { margin-left: auto; }
@@ -375,6 +386,28 @@ header.site.open .menu-btn span::after { transform: translateY(-5px) rotate(-45d
 .motion .cards.paging > * { animation: rise .45s var(--ease) backwards; }
 .motion .cards.paging > :nth-child(3n+2) { animation-delay: .05s; }
 .motion .cards.paging > :nth-child(3n) { animation-delay: .1s; }
+.essay {
+  display: grid; grid-template-columns: 1.35fr .85fr; gap: 16px 28px; align-items: stretch;
+}
+.essay-main { grid-row: span 3; margin: 0; display: flex; flex-direction: column; }
+.essay-side { margin: 0; }
+.essay-main img, .essay-side img { width: 100%; display: block; object-fit: cover; border-radius: 4px; }
+.essay-main img { flex: 1; height: 280px; min-height: 320px; }
+.essay-side img { height: 168px; }
+.essay figcaption {
+  margin-top: 8px; font-family: "DM Mono", ui-monospace, monospace;
+  font-size: 12px; letter-spacing: .04em; color: var(--muted); line-height: 1.5;
+}
+.essay-copy { padding-top: 4px; }
+.essay-copy .kicker {
+  font-family: "DM Mono", ui-monospace, monospace; font-size: 12px;
+  letter-spacing: .14em; color: var(--green); margin-bottom: 10px;
+}
+.essay-copy h2 {
+  font-family: "Noto Serif TC", "Noto Sans TC", serif; font-weight: 600;
+  font-size: clamp(28px, 3vw, 40px); line-height: 1.35; letter-spacing: -.01em;
+}
+.essay-copy p + p { margin-top: 14px; color: var(--muted); max-width: 36rem; }
 .quote-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .quote { margin: 0; padding: 24px; display: flex; flex-direction: column; gap: 18px; }
 .quote blockquote { margin: 0; font-size: 15.5px; position: relative; padding-top: 22px; }
@@ -933,7 +966,12 @@ footer.site { padding: 36px 0 44px; color: var(--muted); font-size: 14px; }
 
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; padding: 40px 32px; }
-  .hero-art { display: none; }
+  .hero-art { display: block; }
+  .hero .route, .hero .route-chip { display: none; }
+  .hero-photo { height: 240px; min-height: 0; }
+  .essay { grid-template-columns: 1fr; }
+  .essay-main { grid-row: auto; }
+  .essay-main img { min-height: 240px; height: 280px; }
   .cards, .quote-grid { grid-template-columns: 1fr 1fr; }
   .steps { grid-template-columns: 1fr 1fr; }
   .ask, .faq-grid { grid-template-columns: 1fr; }
@@ -961,7 +999,7 @@ footer.site { padding: 36px 0 44px; color: var(--muted); font-size: 14px; }
   .head-cta { display: none; }
   .float-line { display: inline-flex; }
   .hero { padding: 32px 22px; margin-top: 14px; }
-  .hero-art { display: none; }
+  .hero-art { display: block; }
   .hero .lede { font-size: 16px; }
   .flow, .cards, .quote-grid, .steps, .cats { grid-template-columns: 1fr; }
   .flow-item + .flow-item::before { display: none; }
@@ -971,6 +1009,7 @@ footer.site { padding: 36px 0 44px; color: var(--muted); font-size: 14px; }
   .filter-row { grid-template-columns: 1fr; gap: 6px; }
   .filter-label { padding-top: 0; }
   .school-card .ph { height: 112px; }
+  .school-card .ph.has-photo { height: 148px; }
   .detail-main { padding-left: 20px; padding-right: 20px; }
   .detail-nav { margin: 0 -20px; padding: 10px 16px; overflow-x: auto; }
   .facts { grid-template-columns: 1fr; }
@@ -1133,14 +1172,13 @@ __FAVICON__
   由 _build_redesign.py 從 flylingo.html 產生，要改內容請改原始資料後重新產生。
 
   以後要換的地方：
-  - 範例回饋：搜尋「範例回饋」
-  - 範例回答：搜尋「範例回答」
-  - 範例文章：搜尋「範例文章」
+  - 常見問題：改 _build_redesign.py 的 FAQ。費用、簽證、出發這三類如果規定有更新，改這裡。
+  - 部落格文章：改 _build_redesign.py 的 ARTICLES
 -->
 <script>if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) document.documentElement.classList.add("motion");</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 __BASE_CSS__
 __VARIANT_CSS__
@@ -1176,13 +1214,14 @@ __EXTRA__
         <div>
           <p class="eyebrow">菲律賓語言學校代辦</p>
           <h1>從語言出發，<br><span class="hl">飛向世界</span></h1>
-          <p class="lede">先聽你的目標、週數和預算，再幫你選校、報名，一路陪到抵達。住宿、接機、在學找誰，出發前講清楚。</p>
+          <p class="lede">先了解你的目標、週數和預算，再幫你挑學校、辦報名。住宿、接機和到校後的聯絡窗口，出發前都會跟你確認好。</p>
           <div class="row-btns">
             <a class="btn btn-primary" href="https://lin.ee/oDiSotr" target="_blank" rel="noopener">__LINE_ICON__加 LINE 諮詢</a>
             <a class="btn btn-quiet" href="#schools">看 43 個校區__ARROW__</a>
           </div>
         </div>
         <div class="hero-art" id="hero-route">
+          <img class="hero-photo" src="images/editorial/cebu-palms.jpg" alt="宿霧海岸，椰子樹和船">
           <svg class="route" viewBox="0 0 300 300" role="img" aria-label="從台北直飛菲律賓，約 2 到 3 小時">
             <defs>
               <mask id="route-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="300" height="290">
@@ -1209,43 +1248,65 @@ __EXTRA__
     </div>
 
     <div class="wrap section">
-      <div class="sec-head rv"><h2>同一條路，把學校和出發接起來</h2></div>
+      <div class="sec-head rv"><h2>從選校到上課，飛語幫你做這三件事</h2></div>
       <div class="surface flow rv-group">
-        <article class="flow-item"><span class="num">01</span><h3>選校</h3><p class="meta">城市、課程、強度和住宿一起看，不會先塞一長串學校。</p></article>
-        <article class="flow-item"><span class="num">02</span><h3>代辦</h3><p class="meta">報名、文件、付款、機票、接機串成八步，每步寫明誰做什麼。</p></article>
-        <article class="flow-item"><span class="num">03</span><h3>人在當地</h3><p class="meta">入住、上課到結業都有窗口，出事找誰也講清楚。</p></article>
+        <article class="flow-item"><span class="num">01</span><h3>選校</h3><p class="meta">城市、課程、管理強度和住宿一起比較，不會一次給你一長串學校。</p></article>
+        <article class="flow-item"><span class="num">02</span><h3>代辦</h3><p class="meta">報名、文件、付款、機票和接機分成八個步驟，每一步誰負責都寫清楚。</p></article>
+        <article class="flow-item"><span class="num">03</span><h3>在當地</h3><p class="meta">入住、上課到結業，遇到問題都有固定窗口可以找。</p></article>
       </div>
     </div>
 
     <div class="wrap section">
       <div class="sec-head rv">
-        <div><h2>六種風格對照</h2><p class="meta">不是排名，是讓你看出差別。</p></div>
+        <div><h2>六種類型的學校</h2><p class="meta">這不是排名，是讓你快速看出各類學校的差別。</p></div>
         <a class="link-arrow" href="#schools">看全部 43 個校區__ARROW__</a>
       </div>
       <div class="cards rv-group" id="featured-cards"></div>
     </div>
 
     <div class="wrap section">
-      <div class="sec-head rv"><h2>別人怎麼描述這趟行程</h2></div>
-      <div class="quote-grid rv-group">
-        <figure class="surface quote">
-          <blockquote>範例回饋。我只要知道每天上幾堂、週末能不能出門。顧問沒有一次丟十間學校。</blockquote>
-          <figcaption><span class="meta">上班族 · 4 週</span><span class="badge gray">範例</span></figcaption>
+      <div class="essay rv">
+        <figure class="essay-main">
+          <img src="images/editorial/cebu-shore.jpg" alt="宿霧白沙岸和小屋">
+          <figcaption>CEB · 宿霧海岸</figcaption>
         </figure>
-        <figure class="surface quote">
-          <blockquote>範例回饋。比的是門禁和自習，不是泳池照片。行前清單把接機日寫死，機票才敢訂。</blockquote>
-          <figcaption><span class="meta">大學生 · 8 週</span><span class="badge gray">範例</span></figcaption>
+        <div class="essay-copy">
+          <p class="kicker">在當地的一天</p>
+          <h2>語言發生在點餐、看路牌、跟室友說話的時候。</h2>
+          <p>先選城市，再看管理有多嚴。宿霧靠海、學校選擇多；碧瑤比較涼，適合想專心讀書的人；克拉克校園大，外師課比較好找。這裡的照片是城市風景，用來感受環境，不是某一間學校的校園。</p>
+        </div>
+        <figure class="essay-side">
+          <img src="images/editorial/baguio-path.jpg" alt="碧瑤林蔭路">
+          <figcaption>BAG · 碧瑤林蔭</figcaption>
         </figure>
-        <figure class="surface quote">
-          <blockquote>範例回饋。在意的是誰接機、宿舍幾人一間、人到了找誰。這些寫在同一條流程裡。</blockquote>
-          <figcaption><span class="meta">家長</span><span class="badge gray">範例</span></figcaption>
+        <figure class="essay-side">
+          <img src="images/editorial/cebu-city.jpg" alt="宿霧市夜景">
+          <figcaption>CEB · 宿霧市</figcaption>
         </figure>
       </div>
     </div>
 
     <div class="wrap section">
+      <div class="sec-head rv"><h2>諮詢時，我們會先問這三件事</h2></div>
+      <div class="quote-grid rv-group">
+        <article class="surface quote">
+          <h3>上課節奏</h3>
+          <p>一天上幾堂、週末能不能出去。這兩件事先講清楚，再決定週數和學校。我們會先給你三間以內，不會一次給你一長串。</p>
+        </article>
+        <article class="surface quote">
+          <h3>管理方式</h3>
+          <p>先看門禁和晚自習，再看環境照片。接機日期確認之後，再訂機票。</p>
+        </article>
+        <article class="surface quote">
+          <h3>到了找誰</h3>
+          <p>誰去接機、宿舍幾個人一間、有事找哪個窗口。這些出發前會跟你確認。</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="wrap section">
       <div class="sec-head rv">
-        <div><h2>八步走完，才算出發</h2><p class="meta">每一步你要做什麼，一眼看懂。</p></div>
+        <div><h2>出發前的八個步驟</h2><p class="meta">每一步要準備什麼、完成後拿到什麼，先看清楚。</p></div>
         <a class="link-arrow" href="#process">看完整流程__ARROW__</a>
       </div>
       <div class="surface steps rv-group" id="home-steps"></div>
@@ -1254,13 +1315,13 @@ __EXTRA__
     <div class="wrap section">
       <div class="surface ask rv">
         <div>
-          <h2>有問題？先搜尋</h2>
+          <h2>有問題嗎？先搜尋看看</h2>
           <form class="search" id="home-search" role="search">
             __SEARCH_ICON__
             <input id="home-q" name="q" placeholder="簽證、費用、住宿、斯巴達…" aria-label="搜尋問題">
             <button class="btn btn-primary btn-sm" type="submit">搜尋</button>
           </form>
-          <p class="ask-foot"><a class="link-arrow" href="#faq">看 10 個分類__ARROW__</a></p>
+          <p class="ask-foot"><a class="link-arrow" href="#faq">看全部 10 個分類__ARROW__</a></p>
         </div>
         <div>
           <p class="meta" style="margin-bottom:4px">大家最常問</p>
@@ -1274,8 +1335,8 @@ __EXTRA__
         <span class="spark" style="--x:58%;--y:22%;--d:.4s" aria-hidden="true"></span>
         <span class="spark" style="--x:66%;--y:70%;--s:8px;--d:1.8s" aria-hidden="true"></span>
         <div>
-          <h2>還不確定學校？先把條件丟過來</h2>
-          <p>目標、週數、預算，三件事就夠開始。</p>
+          <h2>還沒決定學校？先跟我們聊聊</h2>
+          <p>告訴我們目標、週數和預算，就能開始幫你挑。</p>
         </div>
         <a class="btn btn-light" href="https://lin.ee/oDiSotr" target="_blank" rel="noopener">__LINE_ICON__加 LINE 諮詢</a>
       </div>
@@ -1286,7 +1347,7 @@ __EXTRA__
     <div class="wrap page">
       <div class="page-head rv">
         <h1>43 個校區</h1>
-        <p class="lede">先搜學校或城市，再用條件縮小範圍。這版不放學費。</p>
+        <p class="lede">可以直接搜尋校名或城市，再用條件篩選。學費會依週數和房型變動，最新報價請用 LINE 詢問。</p>
       </div>
       <div class="surface filter-bar rv">
         <form class="search" id="school-search" role="search">
@@ -1313,16 +1374,16 @@ __EXTRA__
   <section data-view="process" hidden>
     <div class="wrap page">
       <div class="page-head rv">
-        <h1>四個階段，飛語陪你走完</h1>
-        <p class="lede">你只要做三件事：說出需求、做決定、照清單準備。其他交給飛語。</p>
+        <h1>代辦流程：四個階段、八個步驟</h1>
+        <p class="lede">你要做的是說出需求、做決定、照清單準備；聯絡學校、整理文件和安排接機，由飛語處理。</p>
       </div>
       <div id="process-steps"></div>
       <div class="surface related">
-        <h2 class="h-sm">這段流程常一起被問</h2>
+        <h2 class="h-sm">和流程有關的常見問題</h2>
         <div class="hot">
           <a href="#faq/agency"><span>找代辦和自己報名差在哪？</span>__ARROW__</a>
-          <a href="#faq/cost"><span>費用大概怎麼看？</span>__ARROW__</a>
-          <a href="#faq/visa"><span>SSP 和 eTravel 是誰核發的？</span>__ARROW__</a>
+          <a href="#faq/cost"><span>費用要怎麼估？</span>__ARROW__</a>
+          <a href="#faq/visa"><span>SSP 和 eTravel 是什麼？要自己辦嗎？</span>__ARROW__</a>
         </div>
       </div>
     </div>
@@ -1332,7 +1393,7 @@ __EXTRA__
     <div class="wrap page">
       <div class="page-head rv">
         <h1>常見問題</h1>
-        <p class="lede">每一題目前都是範例回答。</p>
+        <p class="lede">依主題整理大家最常問的問題。找不到答案，可以直接用 LINE 問我們。</p>
       </div>
       <form class="search" id="faq-search" role="search">
         __SEARCH_ICON__
@@ -1347,7 +1408,7 @@ __EXTRA__
     <div class="wrap page">
       <div class="page-head rv">
         <h1>出發前，先讀這幾篇</h1>
-        <p class="lede">行李、城市、管理強度，出發前最常卡住的問題，一篇講清楚。</p>
+        <p class="lede">行李怎麼帶、城市怎麼選、管理強度怎麼挑，出發前常見的問題整理在這裡。</p>
       </div>
       <div class="blog-grid rv-group" id="blog-list"></div>
     </div>
@@ -1365,7 +1426,7 @@ __EXTRA__
         <svg class="foot-trail" viewBox="0 0 250 28" aria-hidden="true"><path d="M0 24C60-2 176-6 246 14"/></svg>
         <svg class="trail-star" viewBox="-11 -11 22 22" aria-hidden="true"><path d="M0-11L3.2-3.5L11-3.4L4.9 1.6L7 9.2L0 4.8L-7 9.2L-4.9 1.6L-11-3.4L-3.2-3.5Z"/></svg>
         <p class="slogan">從語言出發，<em>飛向世界。</em></p>
-        <p class="foot-sub">菲律賓語言學校代辦，從選校陪你到結業。</p>
+        <p class="foot-sub">菲律賓語言學校代辦，從選校到結業都有人協助。</p>
       </div>
     </div>
     <div class="foot-links">
@@ -1471,13 +1532,28 @@ function cityArt(city, viewBox = "0 0 240 100") {
   return `<svg class="city-art" viewBox="${viewBox}" preserveAspectRatio="xMaxYMax meet" aria-hidden="true">${CITY_ART[city] || CITY_ART["宿霧"]}</svg>`;
 }
 
+// City scenery used until a school sends its own photos. Not the campus.
+// Credits stay in images/editorial/CREDITS.txt; the page does not name the source.
+const CARD_PHOTO = {
+  "cia-mactan-campus": "images/editorial/cebu-palms.jpg",
+  "ev-academy-main-campus": "images/editorial/cebu-city.jpg",
+  "cebu-blue-ocean-academy-main-campus": "images/editorial/cebu-shore.jpg",
+  "pines-main-campus": "images/editorial/baguio-path.jpg",
+  "cij-academy-liloan-campus": "images/editorial/cebu-shore.jpg"
+};
+function cardPhoto(s) {
+  const own = (s.photos || []).find((p) => p.src);
+  return own ? own.src : (CARD_PHOTO[s.id] || "");
+}
 function cardHTML(s, note) {
   const tags = s.strengths.filter((p) => p.length <= 14).slice(0, 3).map((t) => `<span class="tag">${esc(t)}</span>`).join("");
   const exams = examCenters(s);
+  const own = (s.photos || []).some((p) => p.src);
+  const photo = cardPhoto(s);
   return `<a class="surface school-card" href="#school/${esc(s.id)}">
-    <div class="ph" data-city="${esc(s.city)}">
-      ${cityArt(s.city)}
-      <span class="ph-badges">${note ? `<span class="badge note">${esc(note)}</span>` : ""}${kindPill(s)}</span>
+    <div class="ph${photo ? " has-photo" : ""}" data-city="${esc(s.city)}">
+      ${photo ? `<img class="ph-photo" src="${esc(photo)}" alt="">` : cityArt(s.city)}
+      <span class="ph-badges">${photo && !own ? `<span class="badge photo-note">城市風景</span>` : ""}${note ? `<span class="badge note">${esc(note)}</span>` : ""}${kindPill(s)}</span>
       <span class="city-en">${esc(s.cityEn)}</span>
     </div>
     <div class="school-body">
@@ -1565,7 +1641,7 @@ function renderSchools() {
   const shown = list.slice(start, start + PAGE_SIZE);
   document.getElementById("school-cards").innerHTML = shown.length
     ? shown.map((s) => cardHTML(s)).join("")
-    : `<div class="surface empty"><h2 class="h-sm">這個條件目前沒有學校</h2><p class="meta">換個條件，或直接問飛語。</p>${lineBtn("用 LINE 問飛語")}</div>`;
+    : `<div class="surface empty"><h2 class="h-sm">沒有符合條件的學校</h2><p class="meta">試著放寬條件，或直接用 LINE 問我們。</p>${lineBtn("用 LINE 問飛語")}</div>`;
   renderPager(pages);
 }
 
@@ -1701,11 +1777,11 @@ function stayHTML(s) {
     const pills = info.groups.map((g) =>
       `${g.label ? `<span class="meta">${esc(g.label)}</span>` : ""}${g.rooms.map((r) => `<button class="chip sm" type="button" data-room="${esc(r)}" aria-pressed="false">${esc(r)}</button>`).join("")}`
     ).join("");
-    rows.push(`<div class="kv">${key("room", "房型")}<div><div class="chip-row" id="room-pills">${pills}</div><p class="room-note" id="room-note">點房型，會一起帶入「幫我問這間」。</p></div></div>`);
+    rows.push(`<div class="kv">${key("room", "房型")}<div><div class="chip-row" id="room-pills">${pills}</div><p class="room-note" id="room-note">點選房型，會一起帶入「幫我問這間」詢問單。</p></div></div>`);
   } else {
-    rows.push(`<div class="kv">${key("room", "房型")}<p class="meta"><a href="${esc(LINE)}" target="_blank" rel="noopener">用 LINE 問這間</a>。</p></div>`);
+    rows.push(`<div class="kv">${key("room", "房型")}<p class="meta">這間的房型資料整理中，<a href="${esc(LINE)}" target="_blank" rel="noopener">用 LINE 問我們</a>。</p></div>`);
   }
-  if (info.notes.length) rows.push(`<div class="kv">${info.groups.length ? "<span>每間都有</span>" : key("stay", "住宿方式")}${tagList(info.notes)}</div>`);
+  if (info.notes.length) rows.push(`<div class="kv">${info.groups.length ? "<span>所有房型都有</span>" : key("stay", "住宿方式")}${tagList(info.notes)}</div>`);
   if (info.laundry.length) rows.push(`<div class="kv">${key("laundry", "洗衣清潔")}${tagList(info.laundry)}</div>`);
   return rows.join("");
 }
@@ -1719,7 +1795,7 @@ function quoteHTML(s) {
   return `
     <div class="surface aside-cta quote" id="quote">
       <h3>幫我問這間</h3>
-      <p class="meta">點選條件，飛語回你課表、房型和最新費用。</p>
+      <p class="meta">選好條件傳給飛語，我們會回覆課表、房型和最新費用。</p>
       ${group("course", "想上的課", COURSE_TYPES.filter((c) => s.filters.includes(c)))}
       ${group("weeks", "預計週數", WEEK_OPTIONS)}
       ${group("room", "想住的房型", rooms.length ? rooms : GENERIC_ROOMS)}
@@ -1734,7 +1810,7 @@ function bindQuote(root, s) {
   const bubble = root.querySelector("#q-bubble");
   const send = root.querySelector("#q-send");
   const message = () => [
-    `你好，我想問 ${s.name}`,
+    `你好，我想詢問 ${s.name}`,
     pick.course && `課程：${pick.course}`,
     pick.weeks && `週數：${pick.weeks}`,
     pick.room && `房型：${pick.room}`,
@@ -1762,7 +1838,7 @@ function bindQuote(root, s) {
     set("room", b.dataset.room);
     root.querySelector("#room-note").innerHTML = pick.room
       ? `已帶入詢問單：<b>${esc(pick.room)}</b>`
-      : "點房型，會一起帶入「幫我問這間」。";
+      : "點選房型，會一起帶入「幫我問這間」詢問單。";
     const quote = root.querySelector("#quote");
     quote.classList.remove("flash");
     void quote.offsetWidth;
@@ -1771,7 +1847,7 @@ function bindQuote(root, s) {
   send.addEventListener("click", () => {
     if (LINE_OA_ID) return;
     const done = root.querySelector("#q-done");
-    const ok = () => { done.textContent = "已複製！在 LINE 對話框貼上就能送出"; };
+    const ok = () => { done.textContent = "已複製，到 LINE 對話框貼上就能送出。"; };
     if (navigator.clipboard) navigator.clipboard.writeText(message()).then(ok, () => { done.textContent = "請手動複製上面的訊息"; });
     else done.textContent = "請手動複製上面的訊息";
   });
@@ -1801,7 +1877,7 @@ function renderDetail(id) {
     ["管理風格", s.style],
     ["認證", s.accreditation]
   ].filter(([, v]) => v).map(([k, v]) => `<p><span>${esc(k)}</span>${esc(v)}</p>`).join("");
-  const strengths = s.strengths.length ? s.strengths : ["特色待補"];
+  const strengths = s.strengths.length ? s.strengths : ["特色整理中"];
   const level = intensity(s);
   const exams = examCenters(s);
   const fit = splitList(s.suitable).slice(0, 6);
@@ -1850,7 +1926,7 @@ function renderDetail(id) {
       </div>
       <div>
         <h2>適合誰</h2>
-        ${fit.length ? `<ul class="fit">${fit.map((f) => `<li>${CHECK}${esc(f)}</li>`).join("")}</ul>` : `<p class="meta">資料待補</p>`}
+        ${fit.length ? `<ul class="fit">${fit.map((f) => `<li>${CHECK}${esc(f)}</li>`).join("")}</ul>` : `<p class="meta">資料整理中</p>`}
       </div>
     </div>
     <div class="detail-layout">
@@ -1869,7 +1945,7 @@ function renderDetail(id) {
         </section>
         <section class="detail-section" id="d-course">
           <h2>課程</h2>
-          ${courses.length ? `<ul class="checks">${courses.map((c) => `<li>${CHECK}<span>${esc(c)}</span></li>`).join("")}</ul>` : `<p class="meta">課程資料待補</p>`}
+          ${courses.length ? `<ul class="checks">${courses.map((c) => `<li>${CHECK}<span>${esc(c)}</span></li>`).join("")}</ul>` : `<p class="meta">課程資料整理中</p>`}
         </section>
         <section class="detail-section" id="d-stay">
           <h2>住宿與生活</h2>
@@ -1893,8 +1969,8 @@ function renderDetail(id) {
       <aside class="detail-aside">
         ${quoteHTML(s)}
         ${contact ? `<details class="surface contact">
-          <summary>學校官方聯絡${CHEV}</summary>
-          <div class="contact-body"><p class="meta">想比較或報名，請先找飛語。下面是學校自己的窗口。</p>${contact}</div>
+          <summary>學校官方聯絡方式${CHEV}</summary>
+          <div class="contact-body"><p class="meta">想比較學校或報名，請先聯絡飛語。以下是學校官方的聯絡方式。</p>${contact}</div>
         </details>` : ""}
       </aside>
     </div>`;
@@ -1919,6 +1995,17 @@ function renderDetail(id) {
 }
 
 /* Photo gallery: real photos/videos from SCHOOL_PHOTOS, otherwise illustrated placeholders */
+const CITY_SCENERY = {
+  "宿霧": [
+    { src: "images/editorial/cebu-palms.jpg", cat: "海岸", caption: "宿霧海岸。城市風景，不是這間學校的照片。" },
+    { src: "images/editorial/cebu-shore.jpg", cat: "海岸", caption: "宿霧白沙岸。城市風景，不是這間學校的照片。" },
+    { src: "images/editorial/cebu-city.jpg", cat: "城市", caption: "宿霧市夜景。城市風景，不是這間學校的照片。" }
+  ],
+  "碧瑤": [
+    { src: "images/editorial/baguio-path.jpg", cat: "街道", caption: "碧瑤林蔭路。城市風景，不是這間學校的照片。" },
+    { src: "images/editorial/baguio-mtn.jpg", cat: "山城", caption: "碧瑤山城。城市風景，不是這間學校的照片。" }
+  ]
+};
 const PLACEHOLDER_SHOTS = ["校園外觀", "教室", "宿舍", "餐廳", "公共空間"];
 const THUMBS_SHOWN = 6;
 const PLAY = `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>`;
@@ -1936,6 +2023,7 @@ function schoolMedia(s) {
       return { ...p, vid, thumb: p.src || (vid ? `https://img.youtube.com/vi/${vid}/hqdefault.jpg` : ""), cat: p.cat || (vid ? "影片" : "校園") };
     });
   }
+  if (CITY_SCENERY[s.city]) return CITY_SCENERY[s.city].map((p) => ({ ...p, thumb: p.src }));
   return PLACEHOLDER_SHOTS.map((cat) => ({ cat, placeholder: true }));
 }
 
@@ -2146,13 +2234,12 @@ function renderFaq(id, q) {
   const body = document.getElementById("faq-body");
   const input = document.getElementById("faq-q");
   if (input && document.activeElement !== input) input.value = q || "";
-  const vol = () => `<span class="meta">範例回答，上線前替換。</span>`;
   if (id && faqById(id) && !q) {
     const cat = faqById(id);
     body.innerHTML = `<a class="back" href="#faq">${BACK}回到全部分類</a>
-      <div class="cat-head"><h2>${esc(cat.title)}</h2>${vol(cat)}</div>
+      <div class="cat-head"><h2>${esc(cat.title)}</h2><span class="meta">${cat.questions.length} 題</span></div>
       <div class="surface acc-list rv">${cat.questions.map(([qq, aa], i) => acc(qq, aa, i === 0)).join("")}</div>
-      <p class="after-acc"><a class="link-arrow" href="${esc(LINE)}" target="_blank" rel="noopener">還是想問？用 LINE 問飛語${ARROW}</a></p>`;
+      <p class="after-acc"><a class="link-arrow" href="${esc(LINE)}" target="_blank" rel="noopener">沒找到答案？用 LINE 問飛語${ARROW}</a></p>`;
     bindAcc(body);
     return;
   }
@@ -2165,7 +2252,7 @@ function renderFaq(id, q) {
     body.innerHTML = hits.length
       ? `<div class="cat-head"><h2 class="h-sm" style="margin:0">搜尋「${esc(q)}」</h2><span class="meta">${hits.length} 題</span></div>
          <div class="surface acc-list rv">${hits.map(([qq, aa]) => acc(qq, aa, false)).join("")}</div>`
-      : `<div class="surface empty rv"><h2 class="h-sm">沒有對到的問題</h2><p class="meta">換一個詞，或直接把問題丟給飛語。</p>${lineBtn("用 LINE 問這題")}</div>`;
+      : `<div class="surface empty rv"><h2 class="h-sm">找不到相關問題</h2><p class="meta">換個關鍵字試試，或直接用 LINE 問我們。</p>${lineBtn("用 LINE 問這題")}</div>`;
     bindAcc(body);
     return;
   }
@@ -2238,7 +2325,7 @@ function renderArticle(id, section) {
     <article class="surface article rv">
       <div class="wp-content">${a.html}</div>
       <div class="art-cta">
-        <div><h2 class="h-sm">還有沒寫到的？</h2><p class="meta">把你的情況丟給飛語，我們直接回你。</p></div>
+        <div><h2 class="h-sm">還有其他問題？</h2><p class="meta">把你的狀況告訴飛語，我們會直接回覆你。</p></div>
         ${lineBtn("用 LINE 問飛語")}
       </div>
     </article>
@@ -2737,21 +2824,79 @@ def build(variant, data, word, star):
 
 PROCESS_STEPS = [
     {"id": "01", "title": "需求諮詢", "summary": "告訴我們目標、時間和預算。",
-     "you": ["學習目標", "出發時間與週數", "預算範圍", "住宿偏好"], "get": "需求摘要"},
-    {"id": "02", "title": "選校規劃", "summary": "比較城市、課程強度、住宿和總費用，收斂成 2–4 間。",
-     "you": ["選出優先順序"], "get": "2–4 間候選學校"},
-    {"id": "03", "title": "確認方案・報名", "summary": "選定學校後填表、簽約、付訂金。",
+     "you": ["學習目標", "出發時間與週數", "預算範圍", "住宿偏好"], "get": "整理好的條件"},
+    {"id": "02", "title": "選校規劃", "summary": "比較城市、管理強度、住宿和總費用，縮小到 2–4 間。",
+     "you": ["排出你的優先順序"], "get": "2–4 間候選學校"},
+    {"id": "03", "title": "確認方案・報名", "summary": "選定學校後填寫報名表、簽約、付訂金。",
      "you": ["護照資料頁", "報名表", "緊急聯絡人", "訂金"], "get": "報價單與契約"},
-    {"id": "04", "title": "取得入學文件", "summary": "我們送件給學校，你只要核對文件。",
-     "you": ["核對英文姓名與日期"], "get": "入學許可＋正式帳單"},
-    {"id": "05", "title": "付款・機票・接機", "summary": "學校確認名額後再買機票，我們對照接機時段。",
-     "you": ["付尾款", "買機票", "回傳電子機票"], "get": "接機確認＋當地費用清單", "volatile": True},
-    {"id": "06", "title": "入境文件・保險", "summary": "依國籍和停留天數，確認你需要哪些文件。",
-     "you": ["護照效期", "eTravel（出發前 72 小時內）", "旅平／醫療險"], "get": "你的入境文件清單", "volatile": True},
-    {"id": "07", "title": "行前說明", "summary": "出發前 1–2 週說明一次，48 小時前再確認一次。",
+    {"id": "04", "title": "取得入學文件", "summary": "我們向學校送件，你只要核對文件內容。",
+     "you": ["核對英文姓名與日期"], "get": "入學許可、正式帳單"},
+    {"id": "05", "title": "付款・機票・接機", "summary": "學校確認名額後再買機票，我們會幫你對好接機時段。",
+     "you": ["付尾款", "買機票", "回傳電子機票"], "get": "接機確認、當地費用清單", "volatile": True},
+    {"id": "06", "title": "入境文件・保險", "summary": "依國籍和停留天數，確認你需要準備哪些文件。",
+     "you": ["確認護照效期", "填 eTravel（出發前 72 小時內）", "旅遊平安險／海外醫療險"], "get": "入境文件清單", "volatile": True},
+    {"id": "07", "title": "行前說明", "summary": "出發前 1–2 週說明一次，出發前 48 小時再確認一次。",
      "you": ["參加行前說明", "照清單打包"], "get": "出發檢查清單"},
-    {"id": "08", "title": "抵達・在學・結業", "summary": "接機入住後，第一週和中段我們會主動關心。",
-     "you": ["抵達後回報平安"], "get": "到結業都有人可問"},
+    {"id": "08", "title": "抵達・在學・結業", "summary": "接機入住後，第一週和課程中段我們會主動聯絡你。",
+     "you": ["抵達後回報平安"], "get": "結業前都有固定窗口"},
+]
+
+
+# FAQ shown on the site. Replaces the sample answers inside flylingo.html
+# (_build_flylingo.py needs spreadsheets that are not on this computer).
+# Keep the ids: DATA.hot, the process page and #faq/<id> links point at them.
+# "volatile" marks answers that depend on prices or government rules; re-check those before launch.
+FAQ = [
+    {"id": "fit", "title": "適不適合我", "volatile": False, "questions": [
+        ["去幾週比較適合？", "常見是 4 到 12 週。想先習慣開口說英文，4 週可以當起點；想把程度拉上來，建議 8 週以上。實際週數要看你能請多久的假，諮詢時跟我們一起定。"],
+        ["上班族假期不長，也能去嗎？", "可以。先告訴我們你能出發的日期，以及最多能去幾週。我們會找開課日對得上的學校，短期也排得了。"],
+        ["英文程度不好也可以去嗎？", "可以。多數學校到校後會先做分級測驗，再依程度分班。沒有考過檢定也沒關係，諮詢時說一下你現在的程度就好。"],
+    ]},
+    {"id": "cost", "title": "費用", "volatile": True, "questions": [
+        ["菲律賓遊學大概要準備多少錢？", "費用分成三塊：學費和住宿、當地雜費、機票。金額會隨週數、房型和淡旺季變動，所以網站不放固定價目。用 LINE 告訴我們學校和週數，我們回你最新報價。"],
+        ["當地還要另付哪些錢？", "常見有學生許可 SSP、延簽、教材、水電和宿舍押金。各校項目和金額不同，正式報價會列出明細和有效期限。"],
+        ["代辦費什麼時候談？", "第一次諮詢就會說明費用怎麼算，學費以外的支出也會一起列出來。退費和改期規定，以你簽的契約為準。"],
+    ]},
+    {"id": "city", "title": "城市與學校", "volatile": False, "questions": [
+        ["宿霧、碧瑤、克拉克差在哪？", "宿霧學校多，生活機能也方便。碧瑤天氣涼，管理比較嚴的學校多。克拉克校園通常比較大，外師課也比較好安排。我們會先聽你要的管理強度和預算，再幫你縮小城市。"],
+        ["學校那麼多，要怎麼選？", "先定三件事：城市、能接受的管理強度、預算。首頁六間是六種類型的例子，不是排名。全部校區都在學校清單，也可以把條件傳給我們，我們幫你縮小到 2 到 4 間。"],
+        ["可以指定校區嗎？", "可以。同一個品牌常有好幾個校區，管理方式和房型都不一樣。學校清單是一間校區一張卡，報名也是指定到校區。"],
+    ]},
+    {"id": "course", "title": "課程與管理強度", "volatile": False, "questions": [
+        ["斯巴達和半斯巴達差在哪？", "兩邊的課都很密集。差別在課以外：斯巴達平日通常不能外出，晚上有強制自習；半斯巴達平日下課後可以外出，門禁比較晚。選之前先想一件事：下課後你還想讀幾個小時。"],
+        ["一對一每天有幾堂？", "多數學校一天會排好幾堂一對一，再加小班或團體課，堂數各校差很多。有開這門課，不代表每天都上。學校確定之後，我們會把課表跟你確認。"],
+        ["想準備雅思或多益，可以嗎？", "可以。學校清單可以用雅思、多益、托福篩選，學校頁也會註明是不是官方考場。有開準備課程，不代表保證分數。報名前把上課方式和目標分數跟我們確認。"],
+    ]},
+    {"id": "stay", "title": "住宿與生活", "volatile": False, "questions": [
+        ["都住在學校裡嗎？", "多數學校提供校內宿舍，也有校外宿舍或飯店式住宿。房型從單人房到多人房都有，每一間的住宿方式寫在學校頁。"],
+        ["洗衣怎麼處理？", "多數學校有洗衣和房間清潔，每週次數和要不要另外收費，各校不同。學校頁的「洗衣清潔」有目前查到的做法，報名前我們會再跟你確認一次。"],
+        ["伙食吃得慣嗎？", "校內住宿多半含餐，菜色以當地料理為主。有吃素、過敏或其他飲食限制，諮詢時先告訴我們，我們會把它放進選校條件。"],
+    ]},
+    {"id": "visa", "title": "簽證、SSP、eTravel", "volatile": True, "questions": [
+        ["SSP 和 eTravel 是什麼？要自己辦嗎？", "SSP 是在菲律賓上語言課程用的學生許可，由學校向移民局申請，不用自己跑。eTravel 是菲律賓官方的線上入境申報，要自己填。目前是出發前 72 小時內，到移民局官網登記；如果時限有改，以官網為準。請認明官方網站，不要用收費的代填網站。"],
+        ["台灣護照可以待幾天？", "停留天數要看你的護照，以及你是短期入境還是留下來上課。免簽和延簽規定會調整。我們會依你的護照和就讀週數，告訴你要辦哪些手續。"],
+        ["需要自己先辦保險嗎？", "建議出發前自己投保旅遊平安險或海外醫療險。需要哪些保障，行前說明時會跟你確認。"],
+    ]},
+    {"id": "agency", "title": "代辦與準備", "volatile": False, "questions": [
+        ["找代辦和自己報名差在哪？", "自己報名，選校、文件、付款和接機都要自己跟學校確認。找飛語，這些我們一起處理，出發後也有固定的 LINE 窗口。學校官網還是可以看，報名請走飛語，我們才跟得上你的進度。"],
+        ["第一次諮詢要準備什麼？", "準備學習目標、大概週數、預算範圍和住宿偏好就夠了。沒有檢定成績也可以開始。護照影本等文件，等方案確定後再提供。"],
+        ["諮詢要收費嗎？", "用官方 LINE 做第一次諮詢，不收費。確定要報名之後，才會進入報名和簽約。"],
+    ]},
+    {"id": "depart", "title": "出發與抵達", "volatile": True, "questions": [
+        ["機票可以自己訂嗎？", "可以，但要先對上這間學校的接機日和抵達時段。不是每一間都每天接機。請等學校確認名額、接機時間也對好之後，再訂票。"],
+        ["誰來接機？", "航班確認後，由學校或飛語依該校規定安排接機。出發前你會收到接機確認，裡面有時間、地點和聯絡方式。"],
+        ["下飛機後要做什麼？", "行前說明會先走一次：入境、找到接機人員、到校入住。eTravel 這類入境申報，要在官方規定的時間內完成。"],
+    ]},
+    {"id": "support", "title": "在學支援", "volatile": False, "questions": [
+        ["到了學校還可以找飛語嗎？", "可以。入住、上課到結業，課程、住宿或身體不舒服，都可以用原來的 LINE 找飛語。"],
+        ["想換老師或換房怎麼辦？", "先告訴我們發生了什麼、你希望怎麼調整。我們會跟學校溝通。能不能換，要看學校規定和當時的名額。"],
+        ["結業後還會聯絡嗎？", "結業時會確認結業文件和返台安排。之後想再排一趟，用同一個 LINE 聯絡即可。"],
+    ]},
+    {"id": "parent", "title": "家長常問", "volatile": False, "questions": [
+        ["未成年可以自己去嗎？", "要先確認孩子的年齡、有沒有家長陪同，以及學校收不收這個年齡。確認可以之後，選校和報名跟一般學員同一套流程，由飛語協助。"],
+        ["家長怎麼知道孩子平安抵達？", "出發前會登記緊急聯絡人。孩子抵達並入住後，會回報平安。在學期間的聯絡窗口，也會一併給家長。"],
+        ["親子課程和一般 ESL 差在哪？", "親子課程會依孩子的年齡排課表和作息，節奏跟成人 ESL 不同。學校清單可以用「親子」篩選。適不適合，還是要看孩子的年齡和生活習慣。"],
+    ]},
 ]
 
 
@@ -2770,13 +2915,13 @@ ARTICLES = [
         "title": "菲律賓遊學行李清單：哪些一定要帶，哪些到當地再買",
         "excerpt": "一次去一兩個月，行李最容易帶太多。這份清單分成必帶和當地買得到，出發前照著點一次。",
         "html": """
-<p>平常出國四五天，隨便塞一箱就走。遊學一去就是一兩個月，行李反而要想得更清楚：哪些東西在菲律賓不好買，哪些到了再買更省空間。</p>
+<p>短途旅行常常一個箱子就走。遊學要待一到兩個月，行李反而要想清楚：哪些東西在菲律賓不好買，哪些到了再買比較省空間。</p>
 <blockquote><p>先記三件事：證件文件、慣用藥品、隱形眼鏡要從台灣帶足。其他生活用品，當地大型商場幾乎都買得到。</p></blockquote>
 
 <h2>證件與文件</h2>
 <p>這些文件飛語會在行前說明時一起核對。出發前一晚，照下面再點一次。</p>
 <ul>
-<li>護照正本（效期 6 個月以上）</li>
+<li>護照正本（建議效期還有 6 個月以上）</li>
 <li>護照影本，手機也存一份</li>
 <li>回程或下一段機票</li>
 <li>入學許可信、接機資訊</li>
@@ -2784,7 +2929,7 @@ ARTICLES = [
 <li>大頭照 2–4 張</li>
 <li>少量現金（美金或披索）</li>
 </ul>
-<blockquote><p>菲律賓入境時常會被問回程機票，存在手機裡也可以，但一定要拿得出來。</p></blockquote>
+<blockquote><p>入境時可能會被要求出示回程或下一程機票。存在手機裡可以，但要打得開。</p></blockquote>
 
 <h2>衣物</h2>
 <p>除了碧瑤，菲律賓多數城市一年四季都像台灣的夏天。帶一週份就夠，學校通常有洗衣服務。</p>
@@ -2830,7 +2975,7 @@ ARTICLES = [
 </ul>
 
 <h2>食物</h2>
-<p>想帶台灣零食可以，原則是帶乾的、包裝完整的，例如餅乾和沒有肉塊的泡麵。肉類製品容易被海關沒收，建議不要帶。當地大型超市也買得到一些台灣泡麵。</p>
+<p>想帶台灣零食可以，帶乾的、包裝完整的，例如餅乾和沒有肉塊的泡麵。肉類、肉乾這類製品，海關可能不讓帶。不確定就不要帶。當地大型超市也買得到一些台灣泡麵。</p>
 
 <h2>常見問題</h2>
 <details><summary>要帶洗衣精嗎？</summary><p>不用。多數學校有洗衣服務，自助洗衣的話第一週通常會帶大家去商場採買，到時再買就好。</p></details>
@@ -2862,7 +3007,7 @@ ARTICLES = [
 <p>宿霧的學校從半斯巴達到度假型都有，週末可以跳島、潛水。選擇多的另一面是容易被照片帶著走，報名前要先想清楚自己要多少管理。</p>
 
 <h2>碧瑤：適合想專心的人</h2>
-<p>碧瑤在山上，整年都比較涼。學校常把平日和晚上排滿，外面能玩的也比較少，反而讓人更容易坐得住。</p>
+<p>碧瑤在山上，整年都比較涼。學校常把平日和晚上排滿，外面能玩的也比較少，比較容易把時間花在讀書上。</p>
 
 <h2>克拉克：校園大、外師多</h2>
 <p>克拉克的學校校地常比較大，也比較容易安排外師課。它不是小一號的宿霧，進城方式和作息都不同，適合想換個環境的人。</p>
@@ -2880,8 +3025,8 @@ ARTICLES = [
 <blockquote><p>把四題的答案傳給飛語，我們會幫你從 43 個校區縮小到 2–4 間。</p></blockquote>
 
 <h2>常見問題</h2>
-<details><summary>第一次去，選哪個城市最保險？</summary><p>多數人會從宿霧開始，學校多、交通方便，萬一不適合也容易換。但如果你知道自己容易分心，碧瑤可能更好。</p></details>
-<details><summary>可以一趟去兩個城市嗎？</summary><p>可以。常見做法是前段在碧瑤打底，後段到宿霧，但兩間學校的入學日要對好，建議先跟飛語排。</p></details>
+<details><summary>第一次去，選哪個城市比較合適？</summary><p>很多人從宿霧開始，因為學校多、生活機能也比較方便。如果你知道自己容易分心，可以先看碧瑤。最後還是要看你的目標，以及你能接受多嚴格的管理。</p></details>
+<details><summary>可以一趟去兩個城市嗎？</summary><p>可以，但兩間學校的開學日要接得上。想這樣排，先跟飛語講，我們再對日期。</p></details>
 """,
     },
     {
@@ -2890,7 +3035,7 @@ ARTICLES = [
         "tone": "coral",
         "cover": "",
         "title": "斯巴達、半斯巴達差在哪？先問自己晚上還讀不讀",
-        "excerpt": "名字聽起來很嚇人，其實差在平日能不能外出、晚上有沒有自習。看完就知道你適合哪一種。",
+        "excerpt": "名稱聽起來差很多，實際差別在平日能不能外出、晚上有沒有自習。看完就知道你適合哪一種。",
         "html": """
 <p>斯巴達和半斯巴達都是密集課，差別在課以外的時間。報名前先想清楚：下課後，你希望自己在做什麼？</p>
 
@@ -2898,7 +3043,7 @@ ARTICLES = [
 <table>
 <thead><tr><th>類型</th><th>差在哪</th></tr></thead>
 <tbody>
-<tr><td>斯巴達</td><td>平日不能外出或有門禁，晚上有強制自習，週末才放風</td></tr>
+<tr><td>斯巴達</td><td>平日不能外出或有門禁，晚上有強制自習，週末才能外出</td></tr>
 <tr><td>半斯巴達</td><td>課一樣密，但平日下課後可以外出，門禁時間比較晚</td></tr>
 <tr><td>彈性・度假型</td><td>上課以外自己安排，適合自律、或有工作要處理的人</td></tr>
 </tbody>
@@ -2926,8 +3071,8 @@ ARTICLES = [
 <blockquote><p>各校的名稱不一定統一，有的寫「制度型」或「度假型」。看學校頁上的管理強度條，比只看名字準。</p></blockquote>
 
 <h2>常見問題</h2>
-<details><summary>斯巴達會不會太累？</summary><p>第一週最辛苦，多數人兩週後就習慣了。如果真的不適合，可以問學校能不能調整課表，或後段轉到半斯巴達。</p></details>
-<details><summary>半斯巴達進步會比較慢嗎？</summary><p>不一定。進步看的是你有沒有把下課時間用來複習。知道自己會讀的人，半斯巴達反而比較不會累垮。</p></details>
+<details><summary>斯巴達會不會太累？</summary><p>第一週通常最累。如果讀下來不適合，跟我們說，我們再問學校能不能調整課表。能不能轉成半斯巴達，要看該校規定和名額。</p></details>
+<details><summary>半斯巴達進步會比較慢嗎？</summary><p>不一定。差別在下課後你會不會自己複習。知道自己會讀的人，半斯巴達通常比較能撐完整個週期。</p></details>
 """,
     },
 ]
@@ -2946,13 +3091,26 @@ ARTICLES = [
 SCHOOL_PHOTOS = {}
 
 
+def tidy_address(text):
+    # Source data sometimes puts 區 before the name: "區 麥克坦" -> "麥克坦區".
+    def repl(match):
+        name = match.group(2).strip()
+        gap = " " if re.search(r"[A-Za-z]", name) else ""
+        return f"{match.group(1)}{name}{gap}區"
+
+    return re.sub(r"([，,]|^)\s*區\s+([^，,]+)", repl, text or "")
+
+
 def with_process(data_json):
     import json
     data = json.loads(data_json)
     data["steps"] = PROCESS_STEPS
+    data["faq"] = FAQ
     data["articles"] = ARTICLES
     for school in data["schools"]:
         school["photos"] = SCHOOL_PHOTOS.get(school["id"], [])
+        if school.get("address"):
+            school["address"] = tidy_address(school["address"])
     return json.dumps(data, ensure_ascii=False)
 
 
@@ -2966,6 +3124,10 @@ def main():
     ds = ROOT / "flylingo-design-system.html"
     ds.write_text(design_system(data))
     print(f"wrote {ds.name} ({ds.stat().st_size} bytes)")
+    # flylingo-v3.html 是從 v1 複製後手改的，這個函式不會動它。
+    # 這裡只重建先前的行程單實驗 flylingo-v3-itinerary.html。
+    from _build_v3 import main as build_v3
+    build_v3(data, word, star)
 
 
 if __name__ == "__main__":
