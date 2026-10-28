@@ -15,7 +15,7 @@ FlyLingo 是菲律賓語言學校代辦。這個資料夾是給客戶看的**單
 | `flylingo-v2-crisp.html` | 備案 V2「俐落」：區塊用淺灰細邊、圓角較小，滑過時邊框變綠 |
 | `flylingo-v3.html` | **目前在改的 V3**。從 V1 複製後直接改，重新跑產生程式不會覆寫它。美學參考編輯旅誌：紙色底 `#F7F5EF`、深林綠封面 `#1A3A15`、細線取代浮卡。Logo 綠 `#3A7C30`、芒果黃 `#FEC107` 沒有換。標題用思源宋，城市代碼用 DM Mono。首頁拿掉範例回饋，改成宿霧、碧瑤的照片短文。宿霧和碧瑤的學校頁用 Unsplash 風景當示意（標「示意」，不是學校實拍）；克拉克、打拉、馬尼拉仍是城市插圖。照片在 `images/editorial/`，出處在同資料夾的 `CREDITS.txt`。 |
 | `flylingo-v3-itinerary.html` | 先前的「行程單」實驗，先留著。紙色底、登機證、滾動黃線。由 `_build_v3.py` 產生。 |
-| `flylingo-design-system.html` | 色彩設計系統：品牌色、中性色、強調色候選、對比檢查、用法規則 |
+| `flylingo-design-system.html` | 設計系統：字級、品牌色、中性色、強調色候選、對比檢查、用法規則 |
 | `_build_flylingo.py` | 產生 `flylingo.html`，資料從兩份 Excel 讀（學校清單、八大服務流程） |
 | `_build_redesign.py` | 產生兩個改版，資料和 logo 直接從 `flylingo.html` 讀 |
 | `icons/` | 橫式 logo、流星 logo、網站分頁小圖示 `dark.favion.svg`（綠底、白標、黃星）、城市插圖 `region-*.svg`、住宿插圖 `school-*.svg`（SVG）。這些圖會在產生時直接嵌進 HTML，單獨寄出檔案也看得到；新增插圖要把檔名加進 `_build_redesign.py` 的 `ICON_FILES` |
@@ -114,6 +114,8 @@ FlyLingo 是菲律賓語言學校代辦。這個資料夾是給客戶看的**單
 城市插畫：學校卡片的照片區和詳情頁的城市方塊，不再是單色塊，而是該城市的線條插畫，顏色跟著城市走——宿霧（藍，海浪和椰子樹）、碧瑤（綠，松樹和山）、克拉克（黃，飛機和跑道）、克拉克／打拉（橄欖，丘陵和稻田）、馬尼拉（珊瑚，城市天際線和夕陽）。滑過卡片時插畫裡的太陽、雲、海浪或飛機會輕輕移動。插畫寫在 `_build_redesign.py` 的 `CITY_ART`，顏色在 CSS 的 `[data-city]`；新增城市時兩邊各加一筆，沒加的城市會先用宿霧的圖。
 
 字體：全站統一用 `'Noto Sans TC', "微軟正黑體", "Work Sans", sans-serif, serif`（設定在 `_build_redesign.py` 的 `--sans`），Noto Sans TC 和 Work Sans 從 Google Fonts 載入。數字和英文城市名也用同一套字。
+
+字級也在同一處，只用四種：頁面標題 `--fs-page`（28–38px）、標題 `--fs-sub`（18px，階段名和步驟名）、內文 `--fs-body`（16px，段落、按鈕、導覽、階段說明）、說明與標籤 `--fs-meta`（14px）。每級差 2px。14px 是最小可讀字，代辦頁的「你要做」和「完成後」用這一級。設計系統頁有一份對照。
 
 每個強調色有三階：主色（放白字）、淡色底、深色字，全部通過 WCAG AA 對比 4.5。用量比例是中性 60%、綠 30%、黃加強調色 10%；按鈕永遠是綠色，一張卡片最多兩個強調色。
 
