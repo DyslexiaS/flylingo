@@ -31,7 +31,7 @@ def favicon_link():
 SITE = "https://dyslexias.github.io/flylingo"
 OG_IMAGE = f"{SITE}/icons/og.png?v=2"
 OG_TITLE = "FlyLingo 飛語｜從語言出發，飛向世界"
-OG_DESC = "先了解你的目標、週數和預算，再幫你挑學校、辦報名，到結業都有人協助。"
+OG_DESC = "飛語會了解你的目標、週數和預算，幫你挑選學校並辦理報名，到結業都有人協助。"
 
 
 def og_tags(path):
@@ -411,8 +411,10 @@ header.site.open .menu-btn span::after { transform: translateY(-5px) rotate(-45d
   font-family: "Noto Serif TC", "Noto Sans TC", serif; font-weight: 600;
   font-size: clamp(28px, 3vw, 40px); line-height: 1.35; letter-spacing: -.01em;
 }
+.essay-copy h2 .keep { white-space: nowrap; }
 .essay-copy p + p { margin-top: 14px; color: var(--muted); max-width: 36rem; }
 .quote-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.quote-grid .quote h3 { margin-bottom: 12px; }
 .quote { margin: 0; padding: 24px; display: flex; flex-direction: column; gap: 18px; }
 .quote blockquote { margin: 0; font-size: var(--fs-body); position: relative; padding-top: 22px; }
 .quote blockquote::before {
@@ -422,7 +424,7 @@ header.site.open .menu-btn span::after { transform: translateY(-5px) rotate(-45d
 .quote figcaption { margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 8px; }
 .step {
-  display: flex; gap: 12px; padding: 16px; border-radius: var(--r-md); color: inherit;
+  display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: var(--r-md); color: inherit;
   transition: background .2s;
 }
 .step:hover { background: var(--fill); color: inherit; }
@@ -432,8 +434,7 @@ header.site.open .menu-btn span::after { transform: translateY(-5px) rotate(-45d
   transition: background .25s, color .25s, transform .25s var(--ease);
 }
 .step:hover .dot { background: var(--green); color: #fff; }
-.step strong { display: block; font-size: var(--fs-body); line-height: 1.45; margin-bottom: 2px; }
-.step .meta { font-size: var(--fs-meta); }
+.step strong { display: block; font-size: var(--fs-body); line-height: 1.45; }
 .ask { padding: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start; }
 .ask h2 { margin-bottom: 16px; }
 .search {
@@ -1217,7 +1218,7 @@ __EXTRA__
         <div>
           <p class="eyebrow">菲律賓語言學校代辦</p>
           <h1>從語言出發，<br><span class="hl">飛向世界</span></h1>
-          <p class="lede">先了解你的目標、週數和預算，再幫你挑學校、辦報名。住宿、接機和到校後的聯絡窗口，出發前都會跟你確認好。</p>
+          <p class="lede">飛語會了解你的目標、週數和預算，幫你挑選學校並辦理報名。我們會在出發前和你確認住宿、接機，以及到校後的聯絡窗口。</p>
           <div class="row-btns">
             <a class="btn btn-primary" href="https://lin.ee/oDiSotr" target="_blank" rel="noopener">__LINE_ICON__加 LINE 諮詢</a>
             <a class="btn btn-quiet" href="#schools">看 43 個校區__ARROW__</a>
@@ -1261,7 +1262,7 @@ __EXTRA__
 
     <div class="wrap section">
       <div class="sec-head rv">
-        <div><h2>六種類型的學校</h2><p class="meta">這不是排名，是讓你快速看出各類學校的差別。</p></div>
+        <div><h2>六種類型的學校</h2></div>
         <a class="link-arrow" href="#schools">看全部 43 個校區__ARROW__</a>
       </div>
       <div class="cards rv-group" id="featured-cards"></div>
@@ -1274,8 +1275,8 @@ __EXTRA__
         </figure>
         <div class="essay-copy">
           <p class="kicker">在當地的一天</p>
-          <h2>語言發生在點餐、看路牌、跟室友說話的時候。</h2>
-          <p>先選城市，再看管理有多嚴。宿霧靠海、學校選擇多；碧瑤比較涼，適合想專心讀書的人；克拉克校園大，外師課比較好找。</p>
+          <h2>讓語言完全融入<span class="keep">日常生活</span></h2>
+          <p>先選擇喜歡的城市和學校環境。宿霧靠海、學校選擇多；碧瑤比較涼，適合想專心讀書的人；克拉克校園大，外師課比較好找。</p>
         </div>
         <figure class="essay-side">
           <img src="images/editorial/baguio-path.jpg" alt="碧瑤林蔭路">
@@ -1287,26 +1288,26 @@ __EXTRA__
     </div>
 
     <div class="wrap section">
-      <div class="sec-head rv"><h2>諮詢時，我們會先問這三件事</h2></div>
+      <div class="sec-head rv"><h2>諮詢時，我們會先問你這三件事</h2></div>
       <div class="quote-grid rv-group">
         <article class="surface quote">
-          <h3>上課節奏</h3>
-          <p>一天上幾堂、週末能不能出去。這兩件事先講清楚，再決定週數和學校。我們會先給你三間以內，不會一次給你一長串。</p>
+          <h3>這趟想達成什麼</h3>
+          <p>你想把英文用在生活、考試，還是工作？釐清目的，更能找出適合你的課程跟學校。</p>
         </article>
         <article class="surface quote">
-          <h3>管理方式</h3>
-          <p>先看門禁和晚自習，再看環境照片。接機日期確認之後，再訂機票。</p>
+          <h3>你能去多久</h3>
+          <p>你大概哪個月可以出發，最多能去幾週？週數會影響學校和費用。</p>
         </article>
         <article class="surface quote">
-          <h3>到了找誰</h3>
-          <p>誰去接機、宿舍幾個人一間、有事找哪個窗口。這些出發前會跟你確認。</p>
+          <h3>你希望一天怎麼過</h3>
+          <p>你想一天上滿課，還是週末要能自己安排？這件事決定學校管得緊不緊，也決定你在當地的生活。</p>
         </article>
       </div>
     </div>
 
     <div class="wrap section">
       <div class="sec-head rv">
-        <div><h2>出發前的八個步驟</h2><p class="meta">每一步要準備什麼、完成後拿到什麼，先看清楚。</p></div>
+        <div><h2>出發前的八個步驟</h2><p class="meta">飛語陪你從準備到出發的所有步驟</p></div>
         <a class="link-arrow" href="#process">看完整流程__ARROW__</a>
       </div>
       <div class="surface steps rv-group" id="home-steps"></div>
@@ -1573,7 +1574,7 @@ function renderFeatured() {
 
 function renderHomeSteps() {
   document.getElementById("home-steps").innerHTML = DATA.steps.map((s) =>
-    `<a class="step" href="#process/${esc(s.id)}"><span class="dot num">${Number(s.id)}</span><span><strong>${esc(s.title)}</strong><span class="meta">${esc(s.summary)}</span></span></a>`
+    `<a class="step" href="#process/${esc(s.id)}"><span class="dot num">${Number(s.id)}</span><strong>${esc(s.title)}</strong></a>`
   ).join("");
   document.getElementById("home-hot").innerHTML = DATA.hot.map((id) =>
     `<a href="#faq/${esc(id)}"><span>${esc(faqById(id).questions[0][0])}</span>${ARROW}</a>`
