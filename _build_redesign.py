@@ -739,15 +739,11 @@ footer.site { padding: 36px 0 44px; color: var(--muted); font-size: var(--fs-met
 }
 .amen li svg { color: var(--green); flex: none; }
 .amen { padding: 0; margin: 0; }
-.amen li small { margin-left: auto; font-size: var(--fs-meta); color: var(--mango-ink); white-space: nowrap; }
-.amen li.part { background: var(--mango-soft); }
-.amen li.part svg { color: var(--mango-ink); }
 .amen li.no { background: transparent; box-shadow: inset 0 0 0 1px var(--line-gray); color: var(--faint); }
 .amen li.no svg { color: var(--line-gray); }
 .sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .legend { display: flex; gap: 14px; font-size: var(--fs-meta); color: var(--faint); }
 .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; background: var(--fill); }
-.legend i.part { background: var(--mango-soft); box-shadow: inset 0 0 0 1px var(--mango); }
 .legend i.no { background: transparent; box-shadow: inset 0 0 0 1px var(--line-gray); }
 .more-fac { margin-top: 12px; font-size: var(--fs-meta); color: var(--muted); }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -842,7 +838,9 @@ footer.site { padding: 36px 0 44px; color: var(--muted); font-size: var(--fs-met
 [data-tone="mango"] { --city: #FFF5D6; --city-ink: #A87B00; --city-sun: #FEC107; }
 [data-tone="blue"] { --city: #E4EEF6; --city-ink: #2A73AB; --city-sun: #FEC107; }
 [data-tone="coral"] { --city: #F8EAE4; --city-ink: #C84B2A; --city-sun: #F2A07F; }
+.blog-filters { margin: 4px 0 22px; }
 .blog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.blog-grid > .empty { grid-column: 1 / -1; }
 .post-card { display: flex; flex-direction: column; overflow: hidden; color: inherit; transition: transform .3s var(--ease), box-shadow .3s var(--ease); }
 .post-card:hover { color: inherit; }
 .post-card:hover .city-art .m { transform: translate(-8px, -3px); }
@@ -1409,9 +1407,10 @@ __EXTRA__
   <section data-view="blog" hidden>
     <div class="wrap page">
       <div class="page-head rv">
-        <h1>出發前，先讀這幾篇</h1>
-        <p class="lede">行李怎麼帶、城市怎麼選、管理強度怎麼挑，出發前常見的問題整理在這裡。</p>
+        <h1>精選文章</h1>
+        <p class="lede">這裡收集了飛語精選的文章，包含行前準備、學員心得分享，以及遊學相關的詳細內容，讓還在猶豫或即將出發的你，對這次旅行有更深入的了解。</p>
       </div>
+      <div class="filters blog-filters" id="blog-filters" role="group" aria-label="文章分類"></div>
       <div class="blog-grid rv-group" id="blog-list"></div>
     </div>
   </section>
@@ -1721,26 +1720,28 @@ const CONDITIONAL = /依校區|依方案|部分校區/;
 const GENERIC_FACILITY = /教室|宿舍|住宿|辦公室|相簿|公共空間|公共區|校園|設施（|facilities/;
 
 function facilityGrid(s) {
-  const tokens = splitList(s.facilities);
+  const raw = splitList(s.facilities);
+  const blanket = CONDITIONAL.test(raw[0] || "") && /[：:]/.test(raw[0]);
+  const tokens = (blanket ? [] : raw).filter((t) => !CONDITIONAL.test(t));
   if (splitList(s.laundry).length) tokens.push("洗衣");
   const used = new Set();
   const status = new Map();
   FACILITY_ICONS.forEach(([re, label]) => {
     const hits = tokens.filter((t) => re.test(t));
     hits.forEach((t) => used.add(t));
-    if (hits.length) status.set(label, hits.every((t) => CONDITIONAL.test(t)) ? "part" : "yes");
+    if (hits.length) status.set(label, "yes");
   });
   const cell = ([, label, icon]) => {
     const st = status.get(label) || "no";
-    const note = st === "part" ? "<small>依校區</small>" : st === "no" ? '<span class="sr-only">（資料未提到）</span>' : "";
-    return `<li class="${st === "yes" ? "" : st}">${icon}${esc(label)}${note}</li>`;
+    const note = st === "no" ? '<span class="sr-only">（資料未提到）</span>' : "";
+    return `<li class="${st === "yes" ? "" : "no"}">${icon}${esc(label)}${note}</li>`;
   };
   const core = FACILITY_ICONS.filter(([, label]) => CORE_FACILITIES.includes(label));
   const extra = FACILITY_ICONS.filter(([, label]) => !CORE_FACILITIES.includes(label) && status.has(label));
-  const others = tokens.filter((t) => !used.has(t) && !GENERIC_FACILITY.test(t) && !CONDITIONAL.test(t) && !/^(Wi.?Fi|熱水|冰箱|保險箱|冷氣|空調|電視)$/i.test(t));
+  const others = tokens.filter((t) => !used.has(t) && !GENERIC_FACILITY.test(t) && !/^(Wi.?Fi|熱水|冰箱|保險箱|冷氣|空調|電視)$/i.test(t));
   return {
     cells: [...extra, ...core]
-      .sort((a, b) => ["yes", "part", undefined].indexOf(status.get(a[1])) - ["yes", "part", undefined].indexOf(status.get(b[1])))
+      .sort((a, b) => (status.has(a[1]) ? 0 : 1) - (status.has(b[1]) ? 0 : 1))
       .map(cell).join(""),
     others,
     known: status.size
@@ -1799,6 +1800,15 @@ function stayHTML(s) {
 const WEEK_OPTIONS = ["2 週", "4 週", "8 週", "12 週以上"];
 const GENERIC_ROOMS = ["單人房", "雙人房", "多人房"];
 
+function departOptions() {
+  const now = new Date();
+  return [0, 1, 2, 3].map((i) => {
+    const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+    const month = `${d.getMonth() + 1} 月`;
+    return d.getFullYear() === now.getFullYear() ? month : `${d.getFullYear()} 年 ${month}`;
+  });
+}
+
 function quoteHTML(s) {
   const rooms = roomInfo(s).rooms;
   const group = (key, label, options) => `<div class="q-group"><span>${label}</span><div class="chip-row" data-qkey="${key}">${options.map((o) => `<button class="chip sm" type="button" data-q="${esc(o)}" aria-pressed="false">${esc(o)}</button>`).join("")}</div></div>`;
@@ -1808,6 +1818,7 @@ function quoteHTML(s) {
       <p class="meta">選好條件傳給飛語，我們會回覆課表、房型和最新費用。</p>
       ${group("course", "想上的課", COURSE_TYPES.filter((c) => s.filters.includes(c)))}
       ${group("weeks", "預計週數", WEEK_OPTIONS)}
+      ${group("depart", "預計出發", departOptions())}
       ${group("room", "想住的房型", rooms.length ? rooms : GENERIC_ROOMS)}
       <p class="bubble" id="q-bubble" aria-live="polite"></p>
       <a class="btn btn-primary btn-block" id="q-send" href="${esc(LINE)}" target="_blank" rel="noopener">${LINE_ICON}複製訊息，開啟 LINE</a>
@@ -1816,13 +1827,14 @@ function quoteHTML(s) {
 }
 
 function bindQuote(root, s) {
-  const pick = { course: "", weeks: "", room: "" };
+  const pick = { course: "", weeks: "", depart: "", room: "" };
   const bubble = root.querySelector("#q-bubble");
   const send = root.querySelector("#q-send");
   const message = () => [
     `你好，我想詢問 ${s.name}`,
     pick.course && `課程：${pick.course}`,
     pick.weeks && `週數：${pick.weeks}`,
+    pick.depart && `出發：${pick.depart}`,
     pick.room && `房型：${pick.room}`,
     "想知道課表、房型和最新費用，謝謝！"
   ].filter(Boolean).join("\n");
@@ -1964,7 +1976,7 @@ function renderDetail(id) {
         <section class="detail-section" id="d-fac">
           <div class="sec-head">
             <h2>設施</h2>
-            <p class="legend"><span><i></i>有</span><span><i class="part"></i>依校區</span><span><i class="no"></i>資料未提到</span></p>
+            <p class="legend"><span><i></i>有</span><span><i class="no"></i>資料未提到</span></p>
           </div>
           <ul class="amen">${fac.cells}</ul>
           ${fac.others.length ? `<p class="more-fac">其他：${fac.others.map(esc).join("、")}</p>` : ""}
@@ -2287,11 +2299,24 @@ const BLOG_ART = {
   sparta: '<circle cx="198" cy="50" r="30"/><path d="M198 32v18l12 8"/><path class="m" d="M112 92h48V70h-48zM136 70v22"/><circle class="sun" cx="198" cy="50" r="2"/>',
 };
 
+const BLOG_TAGS = [
+  { id: "prep", label: "行前準備" },
+  { id: "choose", label: "選校指南" },
+  { id: "city", label: "城市介紹" },
+  { id: "exam", label: "考試準備" },
+  { id: "life", label: "當地生活" },
+  { id: "story", label: "心得分享" },
+];
+
+function blogTagLabel(a) {
+  return (BLOG_TAGS.find((t) => t.id === a.tag) || {}).label || a.kicker || "";
+}
+
 function blogCover(a) {
   const art = a.cover
     ? `<img src="${esc(a.cover)}" alt="" loading="lazy">`
     : `<svg class="city-art" viewBox="0 0 240 100" preserveAspectRatio="xMaxYMax meet" aria-hidden="true">${BLOG_ART[a.id] || BLOG_ART.packing}</svg>`;
-  return `<div class="cover${a.cover ? " has-img" : ""}" data-tone="${esc(a.tone || "blue")}"><span class="kind">${esc(a.kicker)}</span>${art}</div>`;
+  return `<div class="cover${a.cover ? " has-img" : ""}" data-tone="${esc(a.tone || "blue")}"><span class="kind">${esc(blogTagLabel(a))}</span>${art}</div>`;
 }
 
 function readMinutes(a) {
@@ -2310,8 +2335,23 @@ function postCard(a, cls = "") {
   </a>`;
 }
 
-function renderBlog() {
-  document.getElementById("blog-list").innerHTML = DATA.articles.map((a, i) => postCard(a, i === 0 ? "feature" : "")).join("");
+function renderBlog(tag) {
+  const current = BLOG_TAGS.some((t) => t.id === tag) ? tag : "";
+  const bar = document.getElementById("blog-filters");
+  const chips = [{ id: "", label: "全部" }, ...BLOG_TAGS];
+  bar.innerHTML = chips.map((t) =>
+    `<button class="chip" type="button" data-tag="${t.id}" aria-pressed="${t.id === current}">${esc(t.label)}</button>`
+  ).join("");
+  bar.querySelectorAll("[data-tag]").forEach((btn) => btn.addEventListener("click", () => {
+    const next = btn.dataset.tag ? "#blog/" + btn.dataset.tag : "#blog";
+    if (location.hash === next) return;
+    location.hash = next;
+  }));
+  const posts = DATA.articles.filter((a) => !current || a.tag === current);
+  const list = document.getElementById("blog-list");
+  list.innerHTML = posts.length
+    ? posts.map((a, i) => postCard(a, !current && i === 0 ? "feature" : "")).join("")
+    : `<div class="surface empty"><p>這個分類的文章還在整理。</p></div>`;
 }
 
 function renderArticle(id, section) {
@@ -2328,7 +2368,7 @@ function renderArticle(id, section) {
   root.innerHTML = `<a class="back" href="#blog">${BACK}回部落格</a>
   <header class="surface art-head rv">
     <div>
-      <p class="eyebrow">${esc(a.kicker)}</p>
+      <p class="eyebrow">${esc(blogTagLabel(a))}</p>
       <h1>${esc(a.title)}</h1>
       <p class="lede">${esc(a.excerpt)}</p>
       <p class="post-meta">閱讀約 ${readMinutes(a)} 分鐘</p>
@@ -2415,7 +2455,7 @@ function render() {
   if (view === "school") renderDetail(route.id);
   if (view === "process") renderProcess(route.id);
   if (view === "faq") renderFaq(route.id, route.q);
-  if (view === "blog") renderBlog();
+  if (view === "blog") renderBlog(route.id);
   if (view === "article") renderArticle(route.id, route.sub);
   const titles = {
     home: "FlyLingo 飛語｜從語言出發，飛向世界",
@@ -2940,6 +2980,7 @@ FAQ = [
 ARTICLES = [
     {
         "id": "packing",
+        "tag": "prep",
         "kicker": "行前準備",
         "tone": "mango",
         "cover": "",
@@ -3016,7 +3057,8 @@ ARTICLES = [
     },
     {
         "id": "cities",
-        "kicker": "選城市",
+        "tag": "city",
+        "kicker": "城市介紹",
         "tone": "blue",
         "cover": "",
         "title": "宿霧、碧瑤、克拉克怎麼選？差在天氣、步調和管得多緊",
@@ -3062,7 +3104,8 @@ ARTICLES = [
     },
     {
         "id": "sparta",
-        "kicker": "選強度",
+        "tag": "choose",
+        "kicker": "選校指南",
         "tone": "coral",
         "cover": "",
         "title": "斯巴達、半斯巴達差在哪？先問自己晚上還讀不讀",
