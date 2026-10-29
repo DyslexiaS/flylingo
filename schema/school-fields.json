@@ -12,7 +12,8 @@
     "date": "日期",
     "select": "單選",
     "checkboxes": "多選",
-    "repeater": "可新增多列"
+    "repeater": "可新增多列",
+    "relationship": "關聯到另一種內容，這裡是部落格文章"
   },
   "filter": {
     "list": "學校清單的篩選按鈕",
@@ -65,17 +66,6 @@
       "excel": "01 E"
     },
     {
-      "key": "legal_name_en",
-      "zh": "正式英文名稱",
-      "en": "Legal name",
-      "type": "text",
-      "required": false,
-      "filter": "no",
-      "options": [],
-      "front": "這一版不顯示",
-      "excel": "01 F"
-    },
-    {
       "key": "city",
       "zh": "城市",
       "en": "City",
@@ -83,14 +73,13 @@
       "required": true,
       "filter": "list",
       "options": [
-        { "value": "宿霧", "en": "Cebu", "label": "宿霧" },
-        { "value": "碧瑤", "en": "Baguio", "label": "碧瑤" },
-        { "value": "克拉克", "en": "Clark", "label": "克拉克" },
-        { "value": "克拉克／打拉", "en": "Tarlac", "label": "打拉" },
-        { "value": "馬尼拉", "en": "Manila", "label": "馬尼拉" }
+        { "value": "宿霧", "en": "Cebu" },
+        { "value": "碧瑤", "en": "Baguio" },
+        { "value": "克拉克", "en": "Clark" },
+        { "value": "馬尼拉", "en": "Manila" }
       ],
-      "front": "清單篩選、列表卡、詳情頁。存原始值，畫面用 label。",
-      "excel": "01 A、02 A"
+      "front": "清單篩選、列表卡、詳情頁。",
+      "excel": "01 A、02 A。Excel 的「克拉克／打拉」改存克拉克。SMEAG 的校區名仍寫打拉校區。"
     },
     {
       "key": "management_level",
@@ -143,9 +132,9 @@
       "type": "checkboxes",
       "required": true,
       "filter": "list",
-      "options": ["ESL", "雅思", "多益", "托福", "商務", "親子"],
-      "front": "清單篩選、列表卡底部、詳情頁「課程選擇」打勾、右側詢問單。",
-      "excel": "02 D、E、G、H、I、J。標籤對應 ESL、IELTS、TOEIC、TOEFL、商務英文、親子／青少年。"
+      "options": ["ESL", "雅思", "多益", "托福", "商務", "親子", "打工度假"],
+      "front": "清單篩選只出現前六個。打工度假先存，這一版不做成篩選按鈕。列表卡底部、詳情頁打勾、右側詢問單用有勾的課程。",
+      "excel": "02 D、E、G、H、I、J、K。標籤對應 ESL、IELTS、TOEIC、TOEFL、商務英文、親子／青少年、打工度假。"
     },
     {
       "key": "ielts_guarantee",
@@ -155,8 +144,19 @@
       "required": true,
       "filter": "no",
       "options": ["有", "沒有"],
-      "front": "這一版不顯示、不篩選。先存著。",
+      "front": "只放後台。",
       "excel": "02 F"
+    },
+    {
+      "key": "native_teacher",
+      "zh": "外師課程",
+      "en": "Native-teacher course",
+      "type": "select",
+      "required": true,
+      "filter": "no",
+      "options": ["有", "沒有"],
+      "front": "只放後台。這是師資，不是設施。",
+      "excel": "02 L。目前 4 校是有。"
     },
     {
       "key": "courses_text",
@@ -193,15 +193,49 @@
       "excel": "01 V"
     },
     {
-      "key": "facilities_text",
+      "key": "topics",
+      "zh": "主題",
+      "en": "Topics",
+      "type": "checkboxes",
+      "required": false,
+      "filter": "no",
+      "options": ["選城市", "選強度", "考試準備", "住宿生活"],
+      "shared_with": "部落格文章用同一組。文章分類直接用這四個，不要再另做 kicker。",
+      "front": "學校清單不篩。學校頁底部用來找同一主題的文章；文章頁用來帶出相關校區。沒勾就不要硬配。",
+      "excel": "沒有。對應現有文章的「選城市」「選強度」，再加上之後會寫的考試和住宿。"
+    },
+    {
+      "key": "related_articles",
+      "zh": "相關文章",
+      "en": "Related articles",
+      "type": "relationship",
+      "required": false,
+      "filter": "no",
+      "options": [],
+      "front": "學校詳情最下方，最多 3 篇。有選就用這 3 篇；沒選才改用同一主題、同一城市的文章。",
+      "excel": "沒有。"
+    },
+    {
+      "key": "facilities",
       "zh": "設施",
       "en": "Facilities",
+      "type": "checkboxes",
+      "required": false,
+      "filter": "no",
+      "options": ["游泳池", "健身房", "自習空間", "餐廳", "咖啡廳", "醫護室", "運動場", "洗衣", "商店", "休閒娛樂", "考場", "高爾夫", "兒童空間", "校內宿舍", "度假／海邊"],
+      "front": "詳情頁設施格，校園裡大家共用的。有勾才顯示，沒勾的這一版不出現，清單也不拿來篩選。熱水、冰箱、保險箱、Wi‑Fi、冷氣、電視改勾「房間裡有」。校內宿舍不進設施格，前台用住宿說明顯示成住宿方式。",
+      "excel": "01 W 的設施、01 Y 的洗衣，以及 02 的高爾夫、游泳池、健身房、洗衣服務、醫護／診所、咖啡廳、校內宿舍、度假／海邊型。同一項勾一次就好。句子裡的熱水、冰箱、保險箱、Wi‑Fi 不要勾進設施。"
+    },
+    {
+      "key": "facilities_note",
+      "zh": "設施補充",
+      "en": "Facilities note",
       "type": "textarea",
       "required": false,
       "filter": "no",
       "options": [],
-      "front": "詳情頁設施格。由這段文字對到圖示，不另外建 11 個設施欄。",
-      "excel": "01 W"
+      "front": "詳情頁設施下面的補充句。例如每週洗衣 2 次、50 公尺泳池、祈禱室。洗衣次數寫這裡，不要在住宿區另列。",
+      "excel": "01 W、01 Y 裡選單裝不下的句子。"
     },
     {
       "key": "accommodation",
@@ -211,8 +245,8 @@
       "required": false,
       "filter": "no",
       "options": [],
-      "front": "詳情頁住宿。",
-      "excel": "01 X"
+      "front": "詳情頁住宿的「住宿方式」：校內、校外或飯店。房型改填房型欄。熱水、冰箱、保險箱、Wi‑Fi 改填房間裡有。多種房型、房型依校區不同這種空話不要留。",
+      "excel": "01 X。能拆成房型或房間裡有的，不要整段留在這裡。"
     },
     {
       "key": "room_types",
@@ -227,15 +261,15 @@
       "excel": "從 01 X 整理。沒寫清楚就留空。"
     },
     {
-      "key": "laundry",
-      "zh": "洗衣清潔",
-      "en": "Laundry",
-      "type": "textarea",
+      "key": "room_amenities",
+      "zh": "房間裡有",
+      "en": "In the room",
+      "type": "checkboxes",
       "required": false,
       "filter": "no",
-      "options": [],
-      "front": "詳情頁住宿。",
-      "excel": "01 Y"
+      "options": ["熱水", "冰箱", "保險箱", "Wi‑Fi", "冷氣", "電視"],
+      "front": "詳情頁住宿的「房間裡有」。有勾才顯示，沒勾不要出現空列。這是房間裡的東西，不要放進設施。",
+      "excel": "從 01 X 拆出來。沒寫就留空。"
     },
     {
       "key": "accreditation",
@@ -258,17 +292,6 @@
       "options": ["IELTS", "TOEIC", "TOEFL", "Cambridge"],
       "front": "有勾才在列表卡和詳情頁顯示藍色「官方考場」。不要用句子自動判斷。",
       "excel": "02 U 只有「有沒有考場」。種類要對 01 Z 人工勾選。"
-    },
-    {
-      "key": "amenity_flags",
-      "zh": "其他條件",
-      "en": "Amenity flags",
-      "type": "checkboxes",
-      "required": false,
-      "filter": "no",
-      "options": ["打工度假", "外師課程", "高爾夫", "游泳池", "健身房", "洗衣服務", "醫護／診所", "咖啡廳", "校內宿舍", "度假／海邊型"],
-      "front": "這一版不拿來篩選，也不單獨顯示。先存著。",
-      "excel": "02 K 到 T"
     },
     {
       "key": "address_zh",
@@ -412,7 +435,7 @@
       "required": true,
       "filter": "no",
       "options": [],
-      "front": "資料裡有，現在的 HTML 還沒畫出來。學校頁頁尾要補「資料查核：日期」。",
+      "front": "只放後台。",
       "excel": "01 AF。43 校目前都是 2026-10-03。"
     },
     {

@@ -55,7 +55,7 @@ def og_tags(path):
 
 
 ICON_FILES = ["region-all", "region-cebu", "region-baguio", "region-clark", "region-tarlac", "region-manila",
-              "school-room", "school-accommodation", "school-laundry"]
+              "school-room", "school-accommodation", "school-in-room", "school-laundry"]
 
 
 def icon_uris():
@@ -1273,20 +1273,17 @@ __EXTRA__
       <div class="essay rv">
         <figure class="essay-main">
           <img src="images/editorial/cebu-shore.jpg" alt="宿霧白沙岸和小屋">
-          <figcaption>CEB · 宿霧海岸</figcaption>
         </figure>
         <div class="essay-copy">
           <p class="kicker">在當地的一天</p>
           <h2>語言發生在點餐、看路牌、跟室友說話的時候。</h2>
-          <p>先選城市，再看管理有多嚴。宿霧靠海、學校選擇多；碧瑤比較涼，適合想專心讀書的人；克拉克校園大，外師課比較好找。這裡的照片是城市風景，用來感受環境，不是某一間學校的校園。</p>
+          <p>先選城市，再看管理有多嚴。宿霧靠海、學校選擇多；碧瑤比較涼，適合想專心讀書的人；克拉克校園大，外師課比較好找。</p>
         </div>
         <figure class="essay-side">
           <img src="images/editorial/baguio-path.jpg" alt="碧瑤林蔭路">
-          <figcaption>BAG · 碧瑤林蔭</figcaption>
         </figure>
         <figure class="essay-side">
           <img src="images/editorial/cebu-city.jpg" alt="宿霧市夜景">
-          <figcaption>CEB · 宿霧市</figcaption>
         </figure>
       </div>
     </div>
@@ -1692,7 +1689,6 @@ const LEVELS = ["自由彈性", "偏彈性", "半斯巴達", "斯巴達", "高�
 const LEVEL_COLOR = ["var(--green)", "var(--green)", "var(--mango)", "var(--coral)", "var(--coral)"];
 const ic = (d) => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
 const FACILITY_ICONS = [
-  [/Wi.?Fi/i, "Wi‑Fi", ic('<path d="M3 9a14 14 0 0 1 18 0M6 12.5a9 9 0 0 1 12 0M9 16a4 4 0 0 1 6 0"/><circle cx="12" cy="19" r=".8" fill="currentColor"/>')],
   [/泳池/, "游泳池", ic('<path d="M3 17c2 0 2-1.5 4.5-1.5S9.5 17 12 17s2.5-1.5 4.5-1.5S19 17 21 17M8 14V5a2 2 0 0 1 4 0M16 14V5a2 2 0 0 0-4 0M8 9h8"/>')],
   [/健身/, "健身房", ic('<path d="M6 7v10M18 7v10M3 10v4M21 10v4M6 12h12"/>')],
   [/圖書館|自習/, "自習空間", ic('<path d="M4 5h6a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h6z"/>')],
@@ -1727,7 +1723,6 @@ const GENERIC_FACILITY = /教室|宿舍|住宿|辦公室|相簿|公共空間|公
 function facilityGrid(s) {
   const tokens = splitList(s.facilities);
   if (splitList(s.laundry).length) tokens.push("洗衣");
-  if (/Wi.?Fi/i.test(s.accommodation || "")) tokens.push("Wi‑Fi");
   const used = new Set();
   const status = new Map();
   FACILITY_ICONS.forEach(([re, label]) => {
@@ -1742,7 +1737,7 @@ function facilityGrid(s) {
   };
   const core = FACILITY_ICONS.filter(([, label]) => CORE_FACILITIES.includes(label));
   const extra = FACILITY_ICONS.filter(([, label]) => !CORE_FACILITIES.includes(label) && status.has(label));
-  const others = tokens.filter((t) => !used.has(t) && !GENERIC_FACILITY.test(t) && !CONDITIONAL.test(t));
+  const others = tokens.filter((t) => !used.has(t) && !GENERIC_FACILITY.test(t) && !CONDITIONAL.test(t) && !/^(Wi.?Fi|熱水|冰箱|保險箱|冷氣|空調|電視)$/i.test(t));
   return {
     cells: [...extra, ...core]
       .sort((a, b) => ["yes", "part", undefined].indexOf(status.get(a[1])) - ["yes", "part", undefined].indexOf(status.get(b[1])))
@@ -1753,25 +1748,35 @@ function facilityGrid(s) {
 }
 
 const ROOM_WORD = /人|房|套房|Deluxe|Premium|Standard|公寓/;
+const IN_ROOM = /^(Wi.?Fi|熱水|冰箱|保險箱|冷氣|空調|電視)$/i;
+const VAGUE_STAY = /多種房型|房型依|房型皆有/;
 
 function roomInfo(s) {
   const groups = [];
-  const notes = [];
+  const stays = [];
+  const amenities = [];
+  const seen = new Set();
+  const add = (list, text) => {
+    const t = text.trim();
+    if (!t || seen.has(t) || VAGUE_STAY.test(t)) return;
+    seen.add(t);
+    list.push(/^wi.?fi$/i.test(t) ? "Wi‑Fi" : t);
+  };
   splitList(s.accommodation).forEach((seg) => {
+    if (IN_ROOM.test(seg.trim())) { add(amenities, seg); return; }
     const m = seg.match(/^(.*?)[：:](.*)$/);
     const label = m ? m[1].trim() : "";
     const body = (m ? m[2] : seg).replace(/^主校區有/, "");
     const items = body.split(/[／/]/).map((x) => x.trim()).filter(Boolean);
     if (items.length >= 2 && items.every((x) => ROOM_WORD.test(x) && x.length <= 12)) {
       groups.push({ label: /住宿|宿舍/.test(label) ? "" : label, rooms: items.map((x) => /人$/.test(x) ? x + "房" : x) });
-    } else {
-      notes.push(seg);
-    }
+      if (/校內|校外|飯店|宿舍|公寓/.test(label)) add(stays, label);
+    } else add(stays, seg);
   });
-  return { groups, notes, rooms: groups.flatMap((g) => g.rooms), laundry: splitList(s.laundry) };
+  return { groups, stays, amenities, rooms: groups.flatMap((g) => g.rooms) };
 }
 
-const STAY_ICONS = { room: "school-room", stay: "school-accommodation", laundry: "school-laundry" };
+const STAY_ICONS = { room: "school-room", stay: "school-accommodation", inroom: "school-in-room" };
 
 function stayHTML(s) {
   const info = roomInfo(s);
@@ -1786,8 +1791,8 @@ function stayHTML(s) {
   } else {
     rows.push(`<div class="kv">${key("room", "房型")}<p class="meta">這間的房型資料整理中，<a href="${esc(LINE)}" target="_blank" rel="noopener">用 LINE 問我們</a>。</p></div>`);
   }
-  if (info.notes.length) rows.push(`<div class="kv">${info.groups.length ? "<span>所有房型都有</span>" : key("stay", "住宿方式")}${tagList(info.notes)}</div>`);
-  if (info.laundry.length) rows.push(`<div class="kv">${key("laundry", "洗衣清潔")}${tagList(info.laundry)}</div>`);
+  if (info.stays.length) rows.push(`<div class="kv">${key("stay", "住宿方式")}${tagList(info.stays)}</div>`);
+  if (info.amenities.length) rows.push(`<div class="kv">${key("inroom", "房間裡有")}${tagList(info.amenities)}</div>`);
   return rows.join("");
 }
 
@@ -2002,13 +2007,13 @@ function renderDetail(id) {
 /* Photo gallery: real photos/videos from SCHOOL_PHOTOS, otherwise illustrated placeholders */
 const CITY_SCENERY = {
   "宿霧": [
-    { src: "images/editorial/cebu-palms.jpg", cat: "海岸", caption: "宿霧海岸。城市風景，不是這間學校的照片。" },
-    { src: "images/editorial/cebu-shore.jpg", cat: "海岸", caption: "宿霧白沙岸。城市風景，不是這間學校的照片。" },
-    { src: "images/editorial/cebu-city.jpg", cat: "城市", caption: "宿霧市夜景。城市風景，不是這間學校的照片。" }
+    { src: "images/editorial/cebu-palms.jpg", cat: "海岸" },
+    { src: "images/editorial/cebu-shore.jpg", cat: "海岸" },
+    { src: "images/editorial/cebu-city.jpg", cat: "城市" }
   ],
   "碧瑤": [
-    { src: "images/editorial/baguio-path.jpg", cat: "街道", caption: "碧瑤林蔭路。城市風景，不是這間學校的照片。" },
-    { src: "images/editorial/baguio-mtn.jpg", cat: "山城", caption: "碧瑤山城。城市風景，不是這間學校的照片。" }
+    { src: "images/editorial/baguio-path.jpg", cat: "街道" },
+    { src: "images/editorial/baguio-mtn.jpg", cat: "山城" }
   ]
 };
 const PLACEHOLDER_SHOTS = ["校園外觀", "教室", "宿舍", "餐廳", "公共空間"];
@@ -2052,7 +2057,7 @@ function galleryHTML(s) {
       <div class="g-track" tabindex="0">${media.map((m, i) => `<button type="button" class="g-slide" data-open="${i}" aria-label="放大第 ${i + 1} 張">${mediaFace(m, s, true)}</button>`).join("")}</div>
       <button type="button" class="g-nav prev" data-step="-1" aria-label="上一張">${CHEV}</button>
       <button type="button" class="g-nav next" data-step="1" aria-label="下一張">${CHEV}</button>
-      <span class="g-cap">${esc(media[0].caption || media[0].cat)}</span>
+      <span class="g-cap"${media[0].caption ? "" : " hidden"}>${esc(media[0].caption || "")}</span>
       <button type="button" class="g-count" data-all>${GRID_ICON}<span>1 / ${media.length}</span></button>
     </div>
     ${cats.length > 1 ? `<div class="g-cats">${cats.map((c) => `<button type="button" class="chip sm" data-cat="${esc(c)}">${esc(c)}</button>`).join("")}</div>` : ""}
@@ -2090,7 +2095,8 @@ function bindGallery(g, s) {
   const sync = () => {
     const i = nav.settle();
     g.querySelector(".g-count span").textContent = `${i + 1} / ${media.length}`;
-    g.querySelector(".g-cap").textContent = media[i].caption || media[i].cat;
+    const cap = g.querySelector(".g-cap");
+    if (cap) { cap.textContent = media[i].caption || ""; cap.hidden = !media[i].caption; }
     g.querySelectorAll(".g-thumb").forEach((t) => t.classList.toggle("active", Number(t.dataset.go) === i));
     g.querySelectorAll("[data-cat]").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.cat === media[i].cat)));
   };
@@ -2147,7 +2153,9 @@ function openLightbox(s, start) {
     if (i === last) return;
     last = i;
     box.querySelector(".lb-count").textContent = `${i + 1} / ${media.length}`;
-    box.querySelector(".lb-cap").textContent = media[i].caption || media[i].cat;
+    const lbCap = box.querySelector(".lb-cap");
+    lbCap.textContent = media[i].caption || "";
+    lbCap.hidden = !media[i].caption;
     box.querySelectorAll(".lb-thumbs .g-thumb").forEach((t, j) => {
       t.classList.toggle("active", j === i);
       if (j === i) t.scrollIntoView({ block: "nearest", inline: "center" });
@@ -2891,8 +2899,8 @@ FAQ = [
         ["想準備雅思或多益，可以嗎？", "可以。學校清單可以用雅思、多益、托福篩選，學校頁也會註明是不是官方考場。有開準備課程，不代表保證分數。報名前把上課方式和目標分數跟我們確認。"],
     ]},
     {"id": "stay", "title": "住宿與生活", "volatile": False, "questions": [
-        ["都住在學校裡嗎？", "多數學校提供校內宿舍，也有校外宿舍或飯店式住宿。房型從單人房到多人房都有，每一間的住宿方式寫在學校頁。"],
-        ["洗衣怎麼處理？", "多數學校有洗衣和房間清潔，每週次數和要不要另外收費，各校不同。學校頁的「洗衣清潔」有目前查到的做法，報名前我們會再跟你確認一次。"],
+        ["都住在學校裡嗎？", "多數學校提供校內宿舍，也有校外宿舍或飯店式住宿。學校頁的住宿會寫房型、住宿方式，以及房間裡有沒有熱水、冰箱、保險箱。游泳池、健身房、洗衣區寫在設施。"],
+        ["洗衣怎麼處理？", "多數學校有洗衣和房間清潔，每週次數和要不要另外收費，各校不同。有洗衣的學校，設施裡會標洗衣區。報名前我們會再跟你確認一次。"],
         ["伙食吃得慣嗎？", "校內住宿多半含餐，菜色以當地料理為主。有吃素、過敏或其他飲食限制，諮詢時先告訴我們，我們會把它放進選校條件。"],
     ]},
     {"id": "visa", "title": "簽證、SSP、eTravel", "volatile": True, "questions": [
