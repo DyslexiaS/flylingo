@@ -323,6 +323,30 @@ header.site.open .menu-btn span::after { transform: translateY(-5px) rotate(-45d
 .essay-copy p + p { margin-top: 14px; color: var(--muted); max-width: 36rem; }
 .quote-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .quote-grid .quote h3 { margin-bottom: 12px; }
+.voices { padding: 28px 28px 18px; }
+.voice-stage { display: grid; }
+.voice {
+  grid-area: 1 / 1; display: flex; flex-direction: column; gap: 18px;
+  opacity: 0; visibility: hidden;
+}
+.voice.on { opacity: 1; visibility: visible; }
+.motion .voice { transition: opacity .35s var(--ease); }
+.voice-kicker { margin-bottom: 4px; color: var(--green); font-size: var(--fs-meta); font-weight: 600; }
+.voice h3 { font-size: clamp(22px, 2.2vw, 28px); line-height: 1.35; }
+.voice-text { line-height: 1.75; }
+.voice-who { display: flex; flex-wrap: wrap; gap: 6px; }
+.voice-bar { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+.voice-btn {
+  width: 40px; height: 40px; border: 0; border-radius: 50%; background: var(--fill);
+  color: var(--ink); cursor: pointer; display: grid; place-items: center;
+}
+.voice-btn:hover { background: var(--fill-hover); }
+.voice-dots { display: flex; gap: 8px; align-items: center; }
+.voice-dots button {
+  width: 8px; height: 8px; padding: 0; border: 0; border-radius: 999px;
+  background: var(--line-gray); cursor: pointer;
+}
+.voice-dots button[aria-current="true"] { width: 22px; background: var(--green); }
 .quote { margin: 0; padding: 24px; display: flex; flex-direction: column; gap: 18px; }
 .quote blockquote { margin: 0; font-size: var(--fs-body); position: relative; padding-top: 22px; }
 .quote blockquote::before {
@@ -914,6 +938,7 @@ footer.site { padding: 36px 0 44px; color: var(--muted); font-size: var(--fs-met
   .hero-art { display: block; }
   .hero .lede { font-size: var(--fs-body); }
   .flow, .cards, .quote-grid, .steps, .cats { grid-template-columns: 1fr; }
+  .voices { padding: 22px 18px 14px; }
   .flow-item + .flow-item::before { display: none; }
   .ask, .cta, .related { padding: 24px 22px; }
   .cta { flex-direction: column; align-items: flex-start; }
@@ -1138,6 +1163,59 @@ footer.site { padding: 36px 0 44px; color: var(--muted); font-size: var(--fs-met
         <a class="link-arrow" href="#process">看完整流程<svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
       <div class="surface steps rv-group" id="home-steps"></div>
+    </div>
+
+    <div class="wrap section">
+      <div class="sec-head rv"><h2>八個菲律賓遊學心得案例</h2></div>
+      <div class="surface voices rv" id="voices">
+        <div class="voice-stage">
+          <article class="voice on">
+            <div><p class="voice-kicker">上班族</p><h3>終於敢開口說英文</h3></div>
+            <p class="voice-text">以前遇到外國同事，我明明知道自己想說什麼，卻總是怕講錯。這次去菲律賓遊學，每天都有很多開口練習的機會，老師也會針對我的問題調整課程。慢慢地，我開始敢主動表達自己的想法，也比較不害怕英文對話了。</p>
+            <p class="voice-who"><span class="tag">25–30 歲</span><span class="tag">職場英文</span><span class="tag">一對一課程</span></p>
+          </article>
+          <article class="voice">
+            <div><p class="voice-kicker">大學生</p><h3>出國前先把英文練起來</h3></div>
+            <p class="voice-text">原本計畫出國交換，但想到要用英文上課、認識新朋友就很緊張。透過密集的英文練習，我有更多機會練習聽說，也開始習慣用英文表達自己的意見。這趟遊學讓我對接下來的海外生活更有準備。</p>
+            <p class="voice-who"><span class="tag">18–22 歲</span><span class="tag">海外交換</span><span class="tag">留學準備</span></p>
+          </article>
+          <article class="voice">
+            <div><p class="voice-kicker">求職者</p><h3>讓英文面試不再只是背稿</h3></div>
+            <p class="voice-text">以前準備英文面試，我大多是在背答案，但遇到沒準備過的問題就容易卡住。這次把課程重點放在自我介紹、常見面試問題和即時表達，讓我能反覆練習。最大的收穫是更清楚怎麼組織答案，也更敢臨場應對。</p>
+            <p class="voice-who"><span class="tag">23–30 歲</span><span class="tag">求職</span><span class="tag">英文面試</span></p>
+          </article>
+          <article class="voice">
+            <div><p class="voice-kicker">重新學英文</p><h3>從基礎開始也可以</h3></div>
+            <p class="voice-text">離開學校很久，原本很擔心自己的英文程度跟不上。實際上課後，可以依照自己的程度安排練習，不懂的地方也有機會反覆詢問。每天固定接觸英文，讓我重新建立學習習慣，也比較知道自己接下來應該加強什麼。</p>
+            <p class="voice-who"><span class="tag">30–45 歲</span><span class="tag">英文初學者</span><span class="tag">重新進修</span></p>
+          </article>
+          <article class="voice">
+            <div><p class="voice-kicker">轉職族</p><h3>替未來增加更多可能性</h3></div>
+            <p class="voice-text">我想轉換工作跑道，也知道英文是自己需要補強的能力。這次遊學讓我把注意力集中在英文學習上，透過每天的課程和練習，逐漸找到適合自己的學習方式。回來之後，我也更清楚自己需要持續加強的方向。</p>
+            <p class="voice-who"><span class="tag">25–35 歲</span><span class="tag">轉職規劃</span><span class="tag">長期學習</span></p>
+          </article>
+          <article class="voice">
+            <div><p class="voice-kicker">第一次獨自出國</p><h3>學英文也學獨立</h3></div>
+            <p class="voice-text">一開始最擔心的是生活適應，從住宿、交通到和不同國家的人相處，都需要重新熟悉。後來慢慢建立自己的生活節奏，也認識了不同背景的朋友。除了英文練習，我覺得自己在處理事情和適應新環境方面也成長了很多。</p>
+            <p class="voice-who"><span class="tag">18–25 歲</span><span class="tag">第一次海外生活</span><span class="tag">個人成長</span></p>
+          </article>
+          <article class="voice">
+            <div><p class="voice-kicker">家長視角</p><h3>替孩子做好出國準備</h3></div>
+            <p class="voice-text">第一次安排孩子出國學英文，需要考慮的事情比想像中多，像是學校環境、住宿、接送和生活照顧等。事先把課程與行程資訊確認清楚，能讓我們更有方向地做決定，也讓孩子在出發前就知道自己需要準備什麼。</p>
+            <p class="voice-who"><span class="tag">家長</span><span class="tag">青少年遊學</span><span class="tag">行前規劃</span></p>
+          </article>
+          <article class="voice">
+            <div><p class="voice-kicker">短期進修</p><h3>把時間用在刀口上</h3></div>
+            <p class="voice-text">因為工作關係，沒有辦法安排很長的留學時間，所以希望在有限的時間內集中練習英文。密集課程讓我有固定的學習節奏，也能針對自己較弱的部分安排練習。這次最大的收穫是更清楚自己的程度，以及未來如何持續進步。</p>
+            <p class="voice-who"><span class="tag">25–40 歲</span><span class="tag">短期密集課程</span><span class="tag">時間有限</span></p>
+          </article>
+        </div>
+        <div class="voice-bar">
+          <button class="voice-btn" type="button" data-voice="prev" aria-label="上一則"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <div class="voice-dots" role="group" aria-label="選擇一則回饋"></div>
+          <button class="voice-btn" type="button" data-voice="next" aria-label="下一則"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
     </div>
 
     <div class="wrap section">
@@ -2376,8 +2454,58 @@ function startFlight() {
   io.observe(art);
 }
 
+function startVoices() {
+  const root = document.getElementById("voices");
+  if (!root) return;
+  const slides = [...root.querySelectorAll(".voice")];
+  const dots = root.querySelector(".voice-dots");
+  const stage = root.querySelector(".voice-stage");
+  let index = 0;
+  let timer = 0;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const show = (n) => {
+    index = (n + slides.length) % slides.length;
+    slides.forEach((slide, i) => slide.classList.toggle("on", i === index));
+    stage.setAttribute("aria-label", slides[index].querySelector(".voice-text").textContent);
+    dots.querySelectorAll("button").forEach((dot, i) => {
+      if (i === index) dot.setAttribute("aria-current", "true");
+      else dot.removeAttribute("aria-current");
+    });
+  };
+  slides.forEach((_, i) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.setAttribute("aria-label", `第 ${i + 1} 則`);
+    dot.addEventListener("click", () => { show(i); arm(); });
+    dots.appendChild(dot);
+  });
+  const step = (delta) => { show(index + delta); arm(); };
+  root.querySelector("[data-voice='prev']").addEventListener("click", () => step(-1));
+  root.querySelector("[data-voice='next']").addEventListener("click", () => step(1));
+  const arm = () => {
+    clearInterval(timer);
+    if (reduced || !document.documentElement.classList.contains("motion")) return;
+    timer = setInterval(() => show(index + 1), 7000);
+  };
+  root.addEventListener("mouseenter", () => clearInterval(timer));
+  root.addEventListener("mouseleave", arm);
+  root.addEventListener("focusin", () => clearInterval(timer));
+  root.addEventListener("focusout", (e) => { if (!root.contains(e.relatedTarget)) arm(); });
+  let startX = null;
+  root.addEventListener("pointerdown", (e) => { if (e.target.closest("button")) return; startX = e.clientX; });
+  root.addEventListener("pointerup", (e) => {
+    if (startX == null) return;
+    const delta = e.clientX - startX;
+    if (Math.abs(delta) > 40) step(delta < 0 ? 1 : -1);
+    startX = null;
+  });
+  show(0);
+  arm();
+}
+
 renderFeatured();
 renderHomeSteps();
+startVoices();
 window.addEventListener("hashchange", render);
 render();
 startFlight();

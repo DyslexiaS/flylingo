@@ -314,6 +314,30 @@ header.site.open .menu-btn span::after { transform: translateY(-5px) rotate(-45d
 .essay-copy p + p { margin-top: 14px; color: var(--muted); max-width: 36rem; }
 .quote-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .quote-grid .quote h3 { margin-bottom: 12px; }
+.voices { padding: 28px 28px 18px; }
+.voice-stage { display: grid; }
+.voice {
+  grid-area: 1 / 1; display: flex; flex-direction: column; gap: 18px;
+  opacity: 0; visibility: hidden;
+}
+.voice.on { opacity: 1; visibility: visible; }
+.motion .voice { transition: opacity .35s var(--ease); }
+.voice-kicker { margin-bottom: 4px; color: var(--green); font-size: var(--fs-meta); font-weight: 600; }
+.voice h3 { font-size: clamp(22px, 2.2vw, 28px); line-height: 1.35; }
+.voice-text { line-height: 1.75; }
+.voice-who { display: flex; flex-wrap: wrap; gap: 6px; }
+.voice-bar { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+.voice-btn {
+  width: 40px; height: 40px; border: 0; border-radius: 50%; background: var(--fill);
+  color: var(--ink); cursor: pointer; display: grid; place-items: center;
+}
+.voice-btn:hover { background: var(--fill-hover); }
+.voice-dots { display: flex; gap: 8px; align-items: center; }
+.voice-dots button {
+  width: 8px; height: 8px; padding: 0; border: 0; border-radius: 999px;
+  background: var(--line-gray); cursor: pointer;
+}
+.voice-dots button[aria-current="true"] { width: 22px; background: var(--green); }
 .quote { margin: 0; padding: 24px; display: flex; flex-direction: column; gap: 18px; }
 .quote blockquote { margin: 0; font-size: var(--fs-body); position: relative; padding-top: 22px; }
 .quote blockquote::before {
@@ -905,6 +929,7 @@ footer.site { padding: 36px 0 44px; color: var(--muted); font-size: var(--fs-met
   .hero-art { display: block; }
   .hero .lede { font-size: var(--fs-body); }
   .flow, .cards, .quote-grid, .steps, .cats { grid-template-columns: 1fr; }
+  .voices { padding: 22px 18px 14px; }
   .flow-item + .flow-item::before { display: none; }
   .ask, .cta, .related { padding: 24px 22px; }
   .cta { flex-direction: column; align-items: flex-start; }
